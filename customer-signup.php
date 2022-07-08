@@ -5,18 +5,54 @@ include('includes/config.php');
 // Code user Registration
 if(isset($_POST['submit']))
 {
-$name=$_POST['fullname'];
-$email=$_POST['emailid'];
-$contactno=$_POST['contactno'];
-$password=md5($_POST['password']);
-$query=mysqli_query($con,"insert into users(name,email,contactno,password) values('$name','$email','$contactno','$password')");
-if($query)
-{
-	echo "<script>alert('You are successfully register');</script>";
-}
-else{
-echo "<script>alert('Not register something went wrong');</script>";
-}
+    $name = $_POST['fullname'];
+    $email = $_POST['emailid'];
+    $password = $_POST['password'];
+    $role = 'buyer';
+    $mobile_number = $_POST['contactno'];
+    $address = $_POST['address'];
+
+
+
+    $url = "http://localhost:9000/api/users";
+
+
+    $myObj = new stdClass();
+    $myObj->name = $name;
+    $myObj->email = $email;
+    $myObj->password = $password;
+    $myObj->role = $role;
+    $myObj->mobile_number = $mobile_number;
+    $myObj->address = $address;
+
+    $myJSON = json_encode($myObj);
+    
+    //url-ify the data for the POST
+
+    echo "<script>console.log($myJSON);</script>";
+    //open connection
+    $ch = curl_init();
+    
+    //set the url, number of POST vars, POST data
+    curl_setopt($ch,CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch,CURLOPT_POST, true);
+    curl_setopt($ch,CURLOPT_POSTFIELDS, $myJSON);
+    
+    //So that curl_exec returns the contents of the cURL; rather than echoing it
+    curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
+    
+    //execute post
+    $result = curl_exec($ch);
+    echo "<script>console.log($result);</script>";
+    echo "<script>  if($result.code < 200 || $result.code >= 300)
+                    alert($result.data.info);
+                    else {console.log($result.data);
+                        alert('Đăng ký tài khoản thành công. Đăng nhập và mua sắm ngay!');
+                         localStorage.setItem('token', $result.data.token);
+                         window.location = 'http://localhost/OnlineMarket/login.php';}
+            </script>";
 }
 ?>
 
@@ -69,7 +105,7 @@ echo "<script>alert('Not register something went wrong');</script>";
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="assets/images/favicon.ico">
-    <script type="text/javascript">
+    <!-- <script type="text/javascript">
     function valid() {
         if (document.register.password.value != document.register.confirmpassword.value) {
             alert("Password and Confirm Password Field do not match  !!");
@@ -78,8 +114,8 @@ echo "<script>alert('Not register something went wrong');</script>";
         }
         return true;
     }
-    </script>
-    <script>
+    </script> -->
+    <!-- <script>
     function userAvailability() {
         $("#loaderIcon").show();
         jQuery.ajax({
@@ -93,7 +129,7 @@ echo "<script>alert('Not register something went wrong');</script>";
             error: function() {}
         });
     }
-    </script>
+    </script> -->
 
 
 
@@ -153,9 +189,15 @@ echo "<script>alert('Not register something went wrong');</script>";
                             </div>
 
                             <div class="form-group">
-                                <label class="info-title" for="contactno">Contact No. <span>*</span></label>
+                                <label class="info-title" for="contactno">Phone Number<span>*</span></label>
                                 <input type="text" class="form-control unicase-form-control text-input" id="contactno"
                                     name="contactno" maxlength="10" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="info-title" for="contactno">Address <span>*</span></label>
+                                <input type="text" class="form-control unicase-form-control text-input" id="address"
+                                    name="address" maxlength="40" required>
                             </div>
 
                             <div class="form-group">
@@ -164,15 +206,8 @@ echo "<script>alert('Not register something went wrong');</script>";
                                     id="password" name="password" required>
                             </div>
 
-                            <div class="form-group">
-                                <label class="info-title" for="confirmpassword">Confirm Password. <span>*</span></label>
-                                <input type="password" class="form-control unicase-form-control text-input"
-                                    id="confirmpassword" name="confirmpassword" required>
-                            </div>
-
-
-                            <button type="submit" name="submit" class="btn-upper btn btn-primary checkout-page-button"
-                                id="submit">Sign Up</button>
+                            <button type=" submit" name="submit" class="btn-upper btn btn-primary checkout-page-button"
+                                id="submit">Đăng ký</button>
                         </form>
 
                     </div>
@@ -202,7 +237,9 @@ echo "<script>alert('Not register something went wrong');</script>";
     <!-- For demo purposes – can be removed on production -->
 
     <script src="switchstylesheet/switchstylesheet.js"></script>
+    <!-- <script type="module" src="js/api/index.js"> -->
 
+    </script>
     <script>
     $(document).ready(function() {
         $(".changecolor").switchstylesheet({

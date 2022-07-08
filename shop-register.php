@@ -5,54 +5,57 @@ include('includes/config.php');
 // Code user Registration
 if(isset($_POST['submit']))
 {
-$name=$_POST['fullname'];
-$email=$_POST['emailid'];
-$contactno=$_POST['contactno'];
-$password=md5($_POST['password']);
-$query=mysqli_query($con,"insert into users(name,email,contactno,password) values('$name','$email','$contactno','$password')");
-if($query)
-{
-	echo "<script>alert('You are successfully register');</script>";
-}
-else{
-echo "<script>alert('Not register something went worng');</script>";
-}
-}
-// Code for User login
-if(isset($_POST['login']))
-{
-   $email=$_POST['email'];
-   $password=md5($_POST['password']);
-$query=mysqli_query($con,"SELECT * FROM users WHERE email='$email' and password='$password'");
-$num=mysqli_fetch_array($query);
-// if($num>0)
-if($num>0)
-{
-$extra="my-cart.php";
-$_SESSION['login']=$_POST['email'];
-$_SESSION['id']=$num['id'];
-$_SESSION['username']=$num['name'];
-$uip=$_SERVER['REMOTE_ADDR'];
-$status=1;
-$log=mysqli_query($con,"insert into userlog(userEmail,userip,status) values('".$_SESSION['login']."','$uip','$status')");
-$host=$_SERVER['HTTP_HOST'];
-$uri=rtrim(dirname($_SERVER['PHP_SELF']),'/\\');
-header("location:http://$host$uri/$extra");
-exit();
-}
-else
-{
-$extra="login.php";
-$email=$_POST['email'];
-$uip=$_SERVER['REMOTE_ADDR'];
-$status=0;
-$log=mysqli_query($con,"insert into userlog(userEmail,userip,status) values('$email','$uip','$status')");
-$host  = $_SERVER['HTTP_HOST'];
-$uri  = rtrim(dirname($_SERVER['PHP_SELF']),'/\\');
-header("location:http://$host$uri/$extra");
-$_SESSION['errmsg']="Invalid email id or Password";
-exit();
-}
+    $name = $_POST['fullname'];
+    $email = $_POST['emailid'];
+    $password = $_POST['password'];
+    $role = 'seller';
+    $mobile_number = $_POST['contactno'];
+    $address = $_POST['address'];
+
+
+
+    $url = "http://localhost:9000/api/users";
+
+
+    $myObj = new stdClass();
+    $myObj->name = $name;
+    $myObj->email = $email;
+    $myObj->password = $password;
+    $myObj->role = $role;
+    $myObj->mobile_number = $mobile_number;
+    $myObj->address = $address;
+
+    $myJSON = json_encode($myObj);
+    
+    //url-ify the data for the POST
+
+    echo "<script>console.log($myJSON);</script>";
+    //open connection
+    $ch = curl_init();
+    
+    //set the url, number of POST vars, POST data
+    curl_setopt($ch,CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch,CURLOPT_POST, true);
+    curl_setopt($ch,CURLOPT_POSTFIELDS, $myJSON);
+    
+    //So that curl_exec returns the contents of the cURL; rather than echoing it
+    curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
+    
+    //execute post
+    $result = curl_exec($ch);
+    echo "<script>console.log($result);</script>";
+    echo "<script>  if($result.code < 200 || $result.code >= 300)
+                    alert($result.data.info);
+                    else {console.log($result.data);
+                        alert('Đăng ký tài khoản bán hàng thành công. Hãy đợi công ty xét duyệt tài khoản của bạn');
+                         localStorage.setItem('token', $result.data.token);
+                         window.location = 'http://localhost/OnlineMarket/shop';}
+            </script>";
+
+
+
 }
 
 
@@ -107,7 +110,7 @@ exit();
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="assets/images/favicon.ico">
-    <script type="text/javascript">
+    <!-- <script type="text/javascript">
     function valid() {
         if (document.register.password.value != document.register.confirmpassword.value) {
             alert("Password and Confirm Password Field do not match  !!");
@@ -116,8 +119,8 @@ exit();
         }
         return true;
     }
-    </script>
-    <script>
+    </script> -->
+    <!-- <script>
     function userAvailability() {
         $("#loaderIcon").show();
         jQuery.ajax({
@@ -131,7 +134,7 @@ exit();
             error: function() {}
         });
     }
-    </script>
+    </script> -->
 
 
 
@@ -195,6 +198,11 @@ exit();
                                 <input type="text" class="form-control unicase-form-control text-input" id="contactno"
                                     name="contactno" maxlength="10" required>
                             </div>
+                            <div class="form-group">
+                                <label class="info-title" for="address">Address <span>*</span></label>
+                                <input type="text" class="form-control unicase-form-control text-input" id="address"
+                                    name="address" maxlength="100" required>
+                            </div>
 
                             <div class="form-group">
                                 <label class="info-title" for="password">Password. <span>*</span></label>
@@ -202,11 +210,6 @@ exit();
                                     id="password" name="password" required>
                             </div>
 
-                            <div class="form-group">
-                                <label class="info-title" for="confirmpassword">Confirm Password. <span>*</span></label>
-                                <input type="password" class="form-control unicase-form-control text-input"
-                                    id="confirmpassword" name="confirmpassword" required>
-                            </div>
                             <div class="form-group">
                                 <label class="info-title" for="agreeterms">
                                     Khi xác nhận đăng ký là bạn đã đồng ý với các

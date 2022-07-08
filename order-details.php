@@ -93,11 +93,14 @@ include('includes/config.php');
                                             <th class="cart-product-name item">Product Name</th>
 
                                             <th class="cart-qty item">Quantity</th>
-                                            <th class="cart-sub-total item">Price Per unit</th>
-                                            <th class="cart-total item">Grandtotal</th>
+                                            <th class="cart-sub-total item">Price</th>
+
                                             <th class="cart-total item">Payment Method</th>
                                             <th class="cart-description item">Order Date</th>
-                                            <th class="cart-total last-item">Action</th>
+                                            <th class="cart-description item">Confirm Date</th>
+                                            <th class="cart-description item">Delivery Date</th>
+
+                                            <th class="cart-total last-item">Status</th>
                                         </tr>
                                     </thead><!-- /thead -->
 
