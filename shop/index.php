@@ -5,29 +5,65 @@ include("include/config.php");
 if(isset($_POST['submit']))
 {
 	$username=$_POST['username'];
-	$password=md5($_POST['password']);
-// $ret=mysqli_query($con,"SELECT * FROM admin WHERE username='$username' and password='$password'");
-// $num=mysqli_fetch_array($ret);
-// if($num>0)
-if(1)
-{
-$extra="change-password.php";//
-$_SESSION['alogin']=$_POST['username'];
-$_SESSION['id']=$num['id'];
-$host=$_SERVER['HTTP_HOST'];
-$uri=rtrim(dirname($_SERVER['PHP_SELF']),'/\\');
-header("location:http://$host$uri/$extra");
-exit();
-}
-else
-{
-$_SESSION['errmsg']="Invalid username or password";
-$extra="index.php";
-$host  = $_SERVER['HTTP_HOST'];
-$uri  = rtrim(dirname($_SERVER['PHP_SELF']),'/\\');
-header("location:http://$host$uri/$extra");
-exit();
-}
+	$password=$_POST['password'];
+    $url = "http://localhost:9000/api/auths/login";
+
+
+    $myObj = new stdClass();
+    $myObj->email = $username;
+    $myObj->password = $password;
+    $myJSON = json_encode($myObj);
+    
+    //url-ify the data for the POST
+
+    echo "<script>console.log($myJSON);</script>";
+    //open connection
+    $ch = curl_init();
+    
+    //set the url, number of POST vars, POST data
+    curl_setopt($ch,CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch,CURLOPT_POST, true);
+    curl_setopt($ch,CURLOPT_POSTFIELDS, $myJSON);
+    
+    //So that curl_exec returns the contents of the cURL; rather than echoing it
+    curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
+    
+    //execute post
+    $result = curl_exec($ch);
+    $json =  json_decode($result);
+    if ($json->code >= 200 && $json->code < 300 && $json->data->role === 'seller')
+    {
+        $_SESSION['alogin']=$_POST['username'];
+    }
+    
+    echo "<script>console.log($result);</script>";
+    echo "<script>  if($result.code < 200 || $result.code >= 300)
+                    {   
+                        if (!$result.data)
+                        alert('Mật khẩu không chính xác')
+                        else alert($result.data.info);
+                        
+                    }
+                    else 
+                    {
+                        if ($result.data.role !== 'seller' )
+                        {
+                            alert('Tài khoản bạn đăng nhập không phải loại tài khoản shop');
+                        }
+                        else if ($result.data.active == 'false')
+                            {
+                                alert('Tài khoản bạn chưa được xét duyệt. Vui lòng quay lại sau');
+                            }
+                            else
+                                {
+                                    console.log($result.data);
+                                    localStorage.setItem('token', $result.data.token);
+                                    window.location = 'http://localhost/OnlineMarket/shop/shop-page.php';
+                                }
+                    }
+            </script>";
 }
 ?>
 

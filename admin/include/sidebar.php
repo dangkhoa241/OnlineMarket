@@ -15,7 +15,10 @@
 
 
         <!--/.widget-nav-->
+        <ul class="widget widget-menu unstyled">
+            <li><a href="category.php"><i class="menu-icon icon-tasks"></i> Create Category </a></li>
 
+        </ul>
         <ul class="widget widget-menu unstyled">
             <li><a href="user-logs.php"><i class="menu-icon icon-tasks"></i>User Login Log </a></li>
 

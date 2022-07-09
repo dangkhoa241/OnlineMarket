@@ -6,38 +6,94 @@ include('includes/config.php');
 // Code for User login
 if(isset($_POST['login']))
 {
-   $email=$_POST['email'];
-   $password=md5($_POST['password']);
-$query=mysqli_query($con,"SELECT * FROM users WHERE email='$email' and password='$password'");
-$num=mysqli_fetch_array($query);
-// if($num>0)
-if($num>0)
-{
-$extra="my-cart.php";
-$_SESSION['login']=$_POST['email'];
-$_SESSION['id']=$num['id'];
-$_SESSION['username']=$num['name'];
-$uip=$_SERVER['REMOTE_ADDR'];
-$status=1;
-$log=mysqli_query($con,"insert into userlog(userEmail,userip,status) values('".$_SESSION['login']."','$uip','$status')");
-$host=$_SERVER['HTTP_HOST'];
-$uri=rtrim(dirname($_SERVER['PHP_SELF']),'/\\');
-header("location:http://$host$uri/$extra");
-exit();
-}
-else
-{
-$extra="login.php";
-$email=$_POST['email'];
-$uip=$_SERVER['REMOTE_ADDR'];
-$status=0;
-$log=mysqli_query($con,"insert into userlog(userEmail,userip,status) values('$email','$uip','$status')");
-$host  = $_SERVER['HTTP_HOST'];
-$uri  = rtrim(dirname($_SERVER['PHP_SELF']),'/\\');
-header("location:http://$host$uri/$extra");
-$_SESSION['errmsg']="Invalid email id or Password";
-exit();
-}
+    $username=$_POST['email'];
+	$password=$_POST['password'];
+    $url = "http://localhost:9000/api/auths/login";
+
+
+    $myObj = new stdClass();
+    $myObj->email = $username;
+    $myObj->password = $password;
+    $myJSON = json_encode($myObj);
+    
+    //url-ify the data for the POST
+
+    echo "<script>console.log($myJSON);</script>";
+    //open connection
+    $ch = curl_init();
+    
+    //set the url, number of POST vars, POST data
+    curl_setopt($ch,CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch,CURLOPT_POST, true);
+    curl_setopt($ch,CURLOPT_POSTFIELDS, $myJSON);
+    
+    //So that curl_exec returns the contents of the cURL; rather than echoing it
+    curl_setopt($ch,CURLOPT_RETURNTRANSFER, true); 
+    
+    //execute post
+    $result = curl_exec($ch);
+    $json =  json_decode($result);
+    if ($json->code >= 200 && $json->code < 300 && $json->data->role === 'buyer')
+    {
+        $_SESSION['login']=$_POST['email'];
+    }
+   
+    echo "<script>console.log($result);</script>";
+    echo "<script>  if($result.code < 200 || $result.code >= 300)
+                    {   
+                        if (!$result.data)
+                        alert('Mật khẩu không chính xác')
+                        else alert($result.data.info);
+                        
+                    }
+                    else 
+                    {
+                        if ($result.data.role !== 'buyer' )
+                        {
+                            alert('Tài khoản bạn đăng nhập không hợp lệ');
+                        }
+                        else
+                                {
+                                    console.log($result.data);
+                                    localStorage.setItem('token', $result.data.token);
+                                    window.location = 'http://localhost/OnlineMarket/my-cart.php';
+                                }
+                    }
+            </script>";
+//    $email=$_POST['email'];
+//    $password=md5($_POST['password']);
+// $query=mysqli_query($con,"SELECT * FROM users WHERE email='$email' and password='$password'");
+// $num=mysqli_fetch_array($query);
+// // if($num>0)
+// if(1)
+// {
+// $extra="my-cart.php";
+// $_SESSION['login']=$_POST['email'];
+// $_SESSION['id']=$num['id'];
+// $_SESSION['username']=$num['name'];
+// $uip=$_SERVER['REMOTE_ADDR'];
+// $status=1;
+// $log=mysqli_query($con,"insert into userlog(userEmail,userip,status) values('".$_SESSION['login']."','$uip','$status')");
+// $host=$_SERVER['HTTP_HOST'];
+// $uri=rtrim(dirname($_SERVER['PHP_SELF']),'/\\');
+// header("location:http://$host$uri/$extra");
+// exit();
+// }
+// else
+// {
+// $extra="login.php";
+// $email=$_POST['email'];
+// $uip=$_SERVER['REMOTE_ADDR'];
+// $status=0;
+// $log=mysqli_query($con,"insert into userlog(userEmail,userip,status) values('$email','$uip','$status')");
+// $host  = $_SERVER['HTTP_HOST'];
+// $uri  = rtrim(dirname($_SERVER['PHP_SELF']),'/\\');
+// header("location:http://$host$uri/$extra");
+// $_SESSION['errmsg']="Invalid email id or Password";
+// exit();
+// }
 }
 
 
@@ -57,7 +113,7 @@ exit();
     <meta name="keywords" content="MediaCenter, Template, eCommerce">
     <meta name="robots" content="all">
 
-    <title>Online Market | Signi-in | Signup</title>
+    <title>Online Market | Signi-in</title>
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
