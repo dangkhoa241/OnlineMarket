@@ -1,12 +1,15 @@
 <!-- <?php
-// define('DB_SERVER','localhost');
-// define('DB_USER','root');
-// define('DB_PASS' ,'');
-// define('DB_NAME', 'shopping');
-// $con = mysqli_connect(DB_SERVER,DB_USER,DB_PASS,DB_NAME);
-// Check connection
-if (mysqli_connect_errno())
-{
- echo "Failed to connect to MySQL: " . mysqli_connect_error();
-}
+    function getData($api){
+        $api = "http://localhost:9000/api/".$api;
+
+        // Read JSON file
+                $json_data = file_get_contents($api);
+
+        // Decode JSON data into PHP array
+                $response_data = json_decode($json_data);
+
+        // All user data exists in 'data' object
+        return $response_data->data;
+    }
 ?> -->
+
