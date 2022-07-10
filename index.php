@@ -120,7 +120,7 @@ if(isset($_GET['action']) && $_GET['action']=="add"){
                 <!-- ============================================== SCROLL TABS ============================================== -->
                 <div id="product-tabs-slider" class="scroll-tabs inner-bottom-vs  wow fadeInUp">
                     <div class="more-info-tab clearfix">
-                        <h3 class="new-product-title pull-left">Featured Products</h3>
+                        <h3 class="new-product-title pull-left">Products</h3>
 
                     </div>
 
@@ -172,6 +172,7 @@ while ($row=mysqli_fetch_array($ret))
                                                     </div><!-- /.product-price -->
 
                                                 </div><!-- /.product-info -->
+
                                                 <?php if($row['productAvailability']=='In Stock'){?>
                                                 <div class="action"><a
                                                         href="index.php?page=product&action=add&id=<?php echo $row['id']; ?>"
@@ -184,6 +185,376 @@ while ($row=mysqli_fetch_array($ret))
                                         </div><!-- /.products -->
                                     </div><!-- /.item -->
                                     <?php } ?>
+
+                                    <div class="item item-carousel">
+                                        <div class="products">
+
+                                            <div class="product">
+                                                <div class="product-image">
+                                                    <div class="image">
+                                                        <a
+                                                            href="product-details.php?pid=<?php echo htmlentities($row['id']);?>">
+                                                            <img src="admin/productimages/<?php echo htmlentities($row['id']);?>/<?php echo htmlentities($row['productImage1']);?>"
+                                                                data-echo="https://suckhoedoisong.qltns.mediacdn.vn/324455921873985536/2021/9/17/tao1-16318699795931750429721-0-0-375-600-crop-1631870249601966495560.jpg"
+                                                                width="180" height="300" alt=""></a>
+                                                    </div><!-- /.image -->
+
+
+                                                </div><!-- /.product-image -->
+
+
+                                                <div class="product-info text-left">
+                                                    <h3 class="name"><a
+                                                            href="product-details.php?pid=<?php echo htmlentities($row['id']);?>"><?php echo htmlentities('Táo đỏ Mỹ');?></a>
+                                                    </h3>
+                                                    <div class="rating rateit-small"></div>
+                                                    <div class="description"></div>
+
+                                                    <div class="product-price">
+                                                        <span class="price">
+                                                            <?php echo htmlentities(120000);?> VND </span>
+                                                        <span
+                                                            class="price-before-discount"><?php echo htmlentities(150000);?>VND
+                                                        </span>
+
+                                                    </div><!-- /.product-price -->
+
+                                                </div><!-- /.product-info -->
+
+                                                <?php if(1){?>
+                                                <div class="action"><a
+                                                        href="index.php?page=product&action=add&id=<?php echo $row['id']; ?>"
+                                                        class="lnk btn btn-primary">Add to Cart</a></div>
+                                                <?php } else {?>
+                                                <div class="action" style="color:red">Out of Stock</div>
+                                                <?php } ?>
+                                            </div><!-- /.product -->
+
+                                        </div><!-- /.products -->
+                                    </div><!-- /.item -->
+                                    <div class="item item-carousel">
+                                        <div class="products">
+
+                                            <div class="product">
+                                                <div class="product-image">
+                                                    <div class="image">
+                                                        <a
+                                                            href="product-details.php?pid=<?php echo htmlentities($row['id']);?>">
+                                                            <img src="admin/productimages/<?php echo htmlentities($row['id']);?>/<?php echo htmlentities($row['productImage1']);?>"
+                                                                data-echo="https://vinmec-prod.s3.amazonaws.com/images/20200513_164911_307202_raucai.max-1800x1800.png"
+                                                                width="180" height="300" alt=""></a>
+                                                    </div><!-- /.image -->
+
+
+                                                </div><!-- /.product-image -->
+
+
+                                                <div class="product-info text-left">
+                                                    <h3 class="name"><a
+                                                            href="product-details.php?pid=<?php echo htmlentities($row['id']);?>"><?php echo htmlentities('Rau cải thìa');?></a>
+                                                    </h3>
+                                                    <div class="rating rateit-small"></div>
+                                                    <div class="description"></div>
+
+                                                    <div class="product-price">
+                                                        <span class="price">
+                                                            <?php echo htmlentities(21000);?> VND </span>
+                                                        <span
+                                                            class="price-before-discount"><?php echo htmlentities(23500);?>VND
+                                                        </span>
+
+                                                    </div><!-- /.product-price -->
+
+                                                </div><!-- /.product-info -->
+
+                                                <?php if(1){?>
+                                                <div class="action"><a
+                                                        href="index.php?page=product&action=add&id=<?php echo $row['id']; ?>"
+                                                        class="lnk btn btn-primary">Add to Cart</a></div>
+                                                <?php } else {?>
+                                                <div class="action" style="color:red">Out of Stock</div>
+                                                <?php } ?>
+                                            </div><!-- /.product -->
+
+                                        </div><!-- /.products -->
+                                    </div><!-- /.item -->
+                                    <div class="item item-carousel">
+                                        <div class="products">
+
+                                            <div class="product">
+                                                <div class="product-image">
+                                                    <div class="image">
+                                                        <a
+                                                            href="product-details.php?pid=<?php echo htmlentities($row['id']);?>">
+                                                            <img src="admin/productimages/<?php echo htmlentities($row['id']);?>/<?php echo htmlentities($row['productImage1']);?>"
+                                                                data-echo="https://dalatfarm.net/wp-content/uploads/2021/06/ca-rot-baby.jpg"
+                                                                width="180" height="300" alt=""></a>
+                                                    </div><!-- /.image -->
+
+
+                                                </div><!-- /.product-image -->
+
+
+                                                <div class="product-info text-left">
+                                                    <h3 class="name"><a
+                                                            href="product-details.php?pid=<?php echo htmlentities($row['id']);?>"><?php echo htmlentities('Cà rốt baby');?></a>
+                                                    </h3>
+                                                    <div class="rating rateit-small"></div>
+                                                    <div class="description"></div>
+
+                                                    <div class="product-price">
+                                                        <span class="price">
+                                                            <?php echo htmlentities(34000);?> VND </span>
+                                                        <span
+                                                            class="price-before-discount"><?php echo htmlentities(45000);?>VND
+                                                        </span>
+
+                                                    </div><!-- /.product-price -->
+
+                                                </div><!-- /.product-info -->
+
+                                                <?php if(1){?>
+                                                <div class="action"><a
+                                                        href="index.php?page=product&action=add&id=<?php echo $row['id']; ?>"
+                                                        class="lnk btn btn-primary">Add to Cart</a></div>
+                                                <?php } else {?>
+                                                <div class="action" style="color:red">Out of Stock</div>
+                                                <?php } ?>
+                                            </div><!-- /.product -->
+
+                                        </div><!-- /.products -->
+                                    </div><!-- /.item -->
+                                    <div class="item item-carousel">
+                                        <div class="products">
+
+                                            <div class="product">
+                                                <div class="product-image">
+                                                    <div class="image">
+                                                        <a
+                                                            href="product-details.php?pid=<?php echo htmlentities($row['id']);?>">
+                                                            <img src="admin/productimages/<?php echo htmlentities($row['id']);?>/<?php echo htmlentities($row['productImage1']);?>"
+                                                                data-echo="https://product.hstatic.net/200000444373/product/cu_den_0e710f1b76234c58be35cd3058617507_1024x1024.png"
+                                                                width="180" height="300" alt=""></a>
+                                                    </div><!-- /.image -->
+
+
+                                                </div><!-- /.product-image -->
+
+
+                                                <div class="product-info text-left">
+                                                    <h3 class="name"><a
+                                                            href="product-details.php?pid=<?php echo htmlentities($row['id']);?>"><?php echo htmlentities('Củ dền Organic');?></a>
+                                                    </h3>
+                                                    <div class="rating rateit-small"></div>
+                                                    <div class="description"></div>
+
+                                                    <div class="product-price">
+                                                        <span class="price">
+                                                            <?php echo htmlentities(13000);?> VND </span>
+                                                        <span
+                                                            class="price-before-discount"><?php echo htmlentities(15000);?>VND
+                                                        </span>
+
+                                                    </div><!-- /.product-price -->
+
+                                                </div><!-- /.product-info -->
+
+                                                <?php if(1){?>
+                                                <div class="action"><a
+                                                        href="index.php?page=product&action=add&id=<?php echo $row['id']; ?>"
+                                                        class="lnk btn btn-primary">Add to Cart</a></div>
+                                                <?php } else {?>
+                                                <div class="action" style="color:red">Out of Stock</div>
+                                                <?php } ?>
+                                            </div><!-- /.product -->
+
+                                        </div><!-- /.products -->
+                                    </div><!-- /.item -->
+                                    <div class="item item-carousel">
+                                        <div class="products">
+
+                                            <div class="product">
+                                                <div class="product-image">
+                                                    <div class="image">
+                                                        <a
+                                                            href="product-details.php?pid=<?php echo htmlentities($row['id']);?>">
+                                                            <img src="admin/productimages/<?php echo htmlentities($row['id']);?>/<?php echo htmlentities($row['productImage1']);?>"
+                                                                data-echo="https://suckhoedoisong.qltns.mediacdn.vn/324455921873985536/2021/9/1/chuoi1-1630451103524540765462.jpg"
+                                                                width="180" height="300" alt=""></a>
+                                                    </div><!-- /.image -->
+
+
+                                                </div><!-- /.product-image -->
+
+
+                                                <div class="product-info text-left">
+                                                    <h3 class="name"><a
+                                                            href="product-details.php?pid=<?php echo htmlentities($row['id']);?>"><?php echo htmlentities('Chuối tiêu');?></a>
+                                                    </h3>
+                                                    <div class="rating rateit-small"></div>
+                                                    <div class="description"></div>
+
+                                                    <div class="product-price">
+                                                        <span class="price">
+                                                            <?php echo htmlentities(8000);?> VND </span>
+                                                        <span
+                                                            class="price-before-discount"><?php echo htmlentities(15000);?>VND
+                                                        </span>
+
+                                                    </div><!-- /.product-price -->
+
+                                                </div><!-- /.product-info -->
+
+                                                <?php if(1){?>
+                                                <div class="action"><a
+                                                        href="index.php?page=product&action=add&id=<?php echo $row['id']; ?>"
+                                                        class="lnk btn btn-primary">Add to Cart</a></div>
+                                                <?php } else {?>
+                                                <div class="action" style="color:red">Out of Stock</div>
+                                                <?php } ?>
+                                            </div><!-- /.product -->
+
+                                        </div><!-- /.products -->
+                                    </div><!-- /.item -->
+                                    <div class="item item-carousel">
+                                        <div class="products">
+
+                                            <div class="product">
+                                                <div class="product-image">
+                                                    <div class="image">
+                                                        <a
+                                                            href="product-details.php?pid=<?php echo htmlentities($row['id']);?>">
+                                                            <img src="admin/productimages/<?php echo htmlentities($row['id']);?>/<?php echo htmlentities($row['productImage1']);?>"
+                                                                data-echo="https://3.bp.blogspot.com/-htFJQjjCfXg/V1vQaJBX6YI/AAAAAAAAAAo/-aZj-QHnxc0ycoL9YdOXEUjrytYSUYitACLcB/s1600/coconut.jpg"
+                                                                width="180" height="300" alt=""></a>
+                                                    </div><!-- /.image -->
+
+
+                                                </div><!-- /.product-image -->
+
+
+                                                <div class="product-info text-left">
+                                                    <h3 class="name"><a
+                                                            href="product-details.php?pid=<?php echo htmlentities($row['id']);?>"><?php echo htmlentities('Dừa sáp ngon, cơm dày');?></a>
+                                                    </h3>
+                                                    <div class="rating rateit-small"></div>
+                                                    <div class="description"></div>
+
+                                                    <div class="product-price">
+                                                        <span class="price">
+                                                            <?php echo htmlentities(150000);?> VND </span>
+                                                        <span
+                                                            class="price-before-discount"><?php echo htmlentities(200000);?>VND
+                                                        </span>
+
+                                                    </div><!-- /.product-price -->
+
+                                                </div><!-- /.product-info -->
+
+                                                <?php if(1){?>
+                                                <div class="action"><a
+                                                        href="index.php?page=product&action=add&id=<?php echo $row['id']; ?>"
+                                                        class="lnk btn btn-primary">Add to Cart</a></div>
+                                                <?php } else {?>
+                                                <div class="action" style="color:red">Out of Stock</div>
+                                                <?php } ?>
+                                            </div><!-- /.product -->
+
+                                        </div><!-- /.products -->
+                                    </div><!-- /.item -->
+
+                                    <div class="item item-carousel">
+                                        <div class="products">
+
+                                            <div class="product">
+                                                <div class="product-image">
+                                                    <div class="image">
+                                                        <a
+                                                            href="product-details.php?pid=<?php echo htmlentities($row['id']);?>">
+                                                            <img src="admin/productimages/<?php echo htmlentities($row['id']);?>/<?php echo htmlentities($row['productImage1']);?>"
+                                                                data-echo="https://product.hstatic.net/200000325223/product/sau_rieng_new-01_63392fbb5c3d449e913faebc332ae80f_master.png"
+                                                                width="180" height="300" alt=""></a>
+                                                    </div><!-- /.image -->
+
+
+                                                </div><!-- /.product-image -->
+
+
+                                                <div class="product-info text-left">
+                                                    <h3 class="name"><a
+                                                            href="product-details.php?pid=<?php echo htmlentities($row['id']);?>"><?php echo htmlentities('Sầu riêng ri 6');?></a>
+                                                    </h3>
+                                                    <div class="rating rateit-small"></div>
+                                                    <div class="description"></div>
+
+                                                    <div class="product-price">
+                                                        <span class="price">
+                                                            <?php echo htmlentities(230000);?> VND </span>
+                                                        <span
+                                                            class="price-before-discount"><?php echo htmlentities(300000);?>VND
+                                                        </span>
+
+                                                    </div><!-- /.product-price -->
+
+                                                </div><!-- /.product-info -->
+
+                                                <?php if(1){?>
+                                                <div class="action"><a
+                                                        href="index.php?page=product&action=add&id=<?php echo $row['id']; ?>"
+                                                        class="lnk btn btn-primary">Add to Cart</a></div>
+                                                <?php } else {?>
+                                                <div class="action" style="color:red">Out of Stock</div>
+                                                <?php } ?>
+                                            </div><!-- /.product -->
+
+                                        </div><!-- /.products -->
+                                    </div><!-- /.item -->
+                                    <div class="item item-carousel">
+                                        <div class="products">
+
+                                            <div class="product">
+                                                <div class="product-image">
+                                                    <div class="image">
+                                                        <a
+                                                            href="product-details.php?pid=<?php echo htmlentities($row['id']);?>">
+                                                            <img src="admin/productimages/<?php echo htmlentities($row['id']);?>/<?php echo htmlentities($row['productImage1']);?>"
+                                                                data-echo="https://www.ritafarm.com/wp-content/uploads/2016/01/rau-muong-ritafarm.jpg"
+                                                                width="180" height="300" alt=""></a>
+                                                    </div><!-- /.image -->
+
+
+                                                </div><!-- /.product-image -->
+
+
+                                                <div class="product-info text-left">
+                                                    <h3 class="name"><a
+                                                            href="product-details.php?pid=<?php echo htmlentities($row['id']);?>"><?php echo htmlentities('Rau muống');?></a>
+                                                    </h3>
+                                                    <div class="rating rateit-small"></div>
+                                                    <div class="description"></div>
+
+                                                    <div class="product-price">
+                                                        <span class="price">
+                                                            <?php echo htmlentities(12000);?> VND </span>
+                                                        <span
+                                                            class="price-before-discount"><?php echo htmlentities(15000);?>VND
+                                                        </span>
+
+                                                    </div><!-- /.product-price -->
+
+                                                </div><!-- /.product-info -->
+
+                                                <?php if(1){?>
+                                                <div class="action"><a
+                                                        href="index.php?page=product&action=add&id=<?php echo $row['id']; ?>"
+                                                        class="lnk btn btn-primary">Add to Cart</a></div>
+                                                <?php } else {?>
+                                                <div class="action" style="color:red">Out of Stock</div>
+                                                <?php } ?>
+                                            </div><!-- /.product -->
+
+                                        </div><!-- /.products -->
+                                    </div><!-- /.item -->
 
                                 </div><!-- /.home-owl-carousel -->
                             </div><!-- /.product-slider -->

@@ -45,7 +45,9 @@ if(isset($_GET['del']))
                             <div class="module-head">
                                 <h3>Manage Users</h3>
                             </div>
+
                             <div class="module-body table">
+
                                 <?php if(isset($_GET['del']))
 {?>
                                 <div class="alert alert-error">
@@ -73,14 +75,34 @@ if(isset($_GET['del']))
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <!-- <tr>
+                                            <td><?php echo 1;?></td>
+                                            <td><?php echo "08ef9wuf9sdufs8fasfsd98";?></td>
+                                            <td><?php echo "Nguyen Van A";?></td>
+                                            <td><?php echo "seller1@gmail.com";?></td>
+                                            <td> <?php echo "0983625745";?></td>
+                                            <td><?php echo "Quận 5";?></td>
+                                            <td class="active"><input type="checkbox" name="active-seller"
+                                                    value="<?php echo false;?>" /></td>
 
+                                        </tr> -->
                                         <?php
 										//Initialize cURL.
 $ch = curl_init();
 
+$token = "<script>document.write(localStorage.getItem('token') || '');</script>";
+$auth = 'Bearer ' . $token;
+
+
+$headers = array(
+    'Accept: application/json',
+    'Content-type: application/json',
+    'Authorization: '. $auth,
+);
+
 //Set the URL that you want to GET by using the CURLOPT_URL option.
 curl_setopt($ch, CURLOPT_URL, 'http://localhost:9000/api/users?active=false&role=seller');
-
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 //Set CURLOPT_RETURNTRANSFER so that the content is returned as a variable.
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
@@ -94,13 +116,13 @@ $data = curl_exec($ch);
 curl_close($ch);
 
 //Print the data out onto the page.
-echo $data;
-										 $query=mysqli_query($con,"select * from users");
-$cnt=1;
-while($row=mysqli_fetch_array($query))
-{
+echo "<script>console.log($data);</script>";
+// 										 $query=mysqli_query($con,"select * from users");
+// $cnt=1;
+// while($row=mysqli_fetch_array($query))
+// {
 ?>
-                                        <tr>
+                                        <!-- <tr>
                                             <td><?php echo htmlentities($cnt);?></td>
                                             <td><?php echo htmlentities($row['name']);?></td>
                                             <td><?php echo htmlentities($row['email']);?></td>
@@ -110,11 +132,61 @@ while($row=mysqli_fetch_array($query))
                                             <td><?php echo htmlentities($row['billingAddress'].",".$row['billingCity'].",".$row['billingState']."-".$row['billingPincode']);?>
                                             </td>
                                             <td><?php echo htmlentities($row['regDate']);?></td>
+                                        </tr> -->
+                                        <!-- <?php $cnt=$cnt+1; } ?> -->
+                                        <!-- <tr>
+                                            <td><?php echo 2;?></td>
+                                            <td><?php echo "3r22wuf9sdufs8fasfsd98";?></td>
+                                            <td><?php echo "Nguyen Van B";?></td>
+                                            <td><?php echo "seller3@gmail.com";?></td>
+                                            <td> <?php echo "0997687457";?></td>
+                                            <td><?php echo "Huyện cần giờ";?></td>
+                                            <td class="active"><input type="checkbox" name="active-seller"
+                                                    value="<?php echo false;?>" /></td>
 
-                                            <?php $cnt=$cnt+1; } ?>
+                                        </tr>
+                                        <tr>
+                                            <td><?php echo 3;?></td>
+                                            <td><?php echo "fsauf9sdufs8fasfsd98";?></td>
+                                            <td><?php echo "Nguyen Ngoc Anh";?></td>
+                                            <td><?php echo "seller4@gmail.com";?></td>
+                                            <td> <?php echo "0988686745";?></td>
+                                            <td><?php echo "Quận Gò Vấp";?></td>
+                                            <td class="active"><input type="checkbox" name="active-seller"
+                                                    value="<?php echo false;?>" /></td>
+
+                                        </tr>
+                                        <tr>
+                                            <td><?php echo 4;?></td>
+                                            <td><?php echo "34539sdufs8fasfsd98";?></td>
+                                            <td><?php echo "Tran Van Tai";?></td>
+                                            <td><?php echo "seller5@gmail.com";?></td>
+                                            <td> <?php echo "0983667865";?></td>
+                                            <td><?php echo "TP Thủ Đức";?></td>
+                                            <td class="active"><input type="checkbox" name="active-seller"
+                                                    value="<?php echo false;?>" /></td>
+
+                                        </tr>
+                                        <tr>
+                                            <td><?php echo 5;?></td>
+                                            <td><?php echo "653wuf9sdufs8fasfsd98";?></td>
+                                            <td><?php echo "Nguyen Thi Hue";?></td>
+                                            <td><?php echo "seller7@gmail.com";?></td>
+                                            <td> <?php echo "0983534558";?></td>
+                                            <td><?php echo "Quận 7";?></td>
+                                            <td class="active"><input type="checkbox" name="active-seller"
+                                                    value="<?php echo false;?>" /></td>
+
+                                        </tr> -->
 
                                 </table>
                             </div>
+                            <span class="">
+
+                                <input type="submit" name="submit" value="Phê duyệt tài khoản"
+                                    class="btn btn-upper btn-primary pull-right outer-right-xs">
+                            </span>
+
                         </div>
 
 
@@ -146,4 +218,3 @@ while($row=mysqli_fetch_array($query))
     });
     </script>
 </body>
-<?php } ?>

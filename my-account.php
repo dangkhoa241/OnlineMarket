@@ -192,6 +192,36 @@ while($row=mysqli_fetch_array($query))
                                                         class="btn-upper btn btn-primary checkout-page-button">Update</button>
                                                 </form>
                                                 <?php } ?>
+                                                <form class="register-form" role="form" method="post">
+                                                    <div class="form-group">
+                                                        <label class="info-title" for="name">Name<span>*</span></label>
+                                                        <input type="text"
+                                                            class="form-control unicase-form-control text-input"
+                                                            value="<?php echo 'Nguyen Van A';?>" id="name" name="name"
+                                                            required="required">
+                                                    </div>
+
+
+
+                                                    <div class="form-group">
+                                                        <label class="info-title" for="exampleInputEmail1">Email Address
+                                                            <span>*</span></label>
+                                                        <input type="email"
+                                                            class="form-control unicase-form-control text-input"
+                                                            id="exampleInputEmail1"
+                                                            value="<?php echo 'buyer2@gmail.com';?>" readonly>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="info-title" for="Contact No.">Mobile Number
+                                                            <span>*</span></label>
+                                                        <input type="text"
+                                                            class="form-control unicase-form-control text-input"
+                                                            id="contactno" name="contactno" required="required"
+                                                            value="<?php echo '0987654321';?>" maxlength="10">
+                                                    </div>
+                                                    <button type="submit" name="update"
+                                                        class="btn-upper btn btn-primary checkout-page-button">Update</button>
+                                                </form>
                                             </div>
                                             <!-- already-registered-login -->
 

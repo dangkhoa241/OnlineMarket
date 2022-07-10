@@ -121,13 +121,43 @@ if(isset($_GET['del']))
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <tr>
+                                            <td><?php echo 1;?></td>
+                                            <td><?php echo "Trái cây";?></td>
+                                            <td><?php echo "Trái cái cây tươi ngon nhà vườn";?></td>
 
-                                        <?php $query=mysqli_query($con,"select * from category");
+                                        </tr>
+                                        <tr>
+                                            <td><?php echo 2;?></td>
+                                            <td><?php echo "Rau xanh";?></td>
+                                            <td><?php echo "Rau xanh Organic không thuốc";?></td>
+
+                                        </tr>
+                                        <tr>
+                                            <td><?php echo 3;?></td>
+                                            <td><?php echo "Thịt";?></td>
+                                            <td><?php echo "Thịt tươi sống, thịt mới mỗi ngày";?></td>
+
+                                        </tr>
+                                        <tr>
+                                            <td><?php echo 4;?></td>
+                                            <td><?php echo "Trứng";?></td>
+                                            <td><?php echo "Các loại trứng gia cầm";?></td>
+
+                                        </tr>
+                                        <tr>
+                                            <td><?php echo 5;?></td>
+                                            <td><?php echo "Thực phẩm khô";?></td>
+                                            <td><?php echo "Thực phẩm khô nội địa, bảo quản lâu dài";?></td>
+
+                                        </tr>
+
+                                        <!-- <?php $query=mysqli_query($con,"select * from category");
 $cnt=1;
 while($row=mysqli_fetch_array($query))
 {
-?>
-                                        <tr>
+?> -->
+                                        <!-- <tr>
                                             <td><?php echo htmlentities($cnt);?></td>
                                             <td><?php echo htmlentities($row['categoryName']);?></td>
                                             <td><?php echo htmlentities($row['categoryDescription']);?></td>
@@ -140,8 +170,8 @@ while($row=mysqli_fetch_array($query))
                                                     onClick="return confirm('Are you sure you want to delete?')"><i
                                                         class="icon-remove-sign"></i></a>
                                             </td>
-                                        </tr>
-                                        <?php $cnt=$cnt+1; } ?>
+                                        </tr> -->
+                                        <!-- <?php $cnt=$cnt+1; } ?> -->
 
                                 </table>
                             </div>

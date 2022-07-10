@@ -168,7 +168,7 @@ echo "<script>alert('Shipping Address has been updated');</script>";
                         <div class="table-responsive">
                             <form name="cart" method="post">
                                 <?php
-if(!empty($_SESSION['cart'])){
+if(1){
 	?>
                                 <table class="table table-bordered">
                                     <thead>
@@ -199,6 +199,174 @@ if(!empty($_SESSION['cart'])){
                                         </tr>
                                     </tfoot>
                                     <tbody>
+                                        <tr>
+                                            <td class="romove-item"><input type="checkbox" name="remove_code[]"
+                                                    value="<?php echo htmlentities($row['id']);?>" /></td>
+                                            <td class="cart-image">
+                                                <a class="entry-thumbnail" href="detail.html">
+                                                    <img src="https://suckhoedoisong.qltns.mediacdn.vn/324455921873985536/2021/9/17/tao1-16318699795931750429721-0-0-375-600-crop-1631870249601966495560.jpg"
+                                                        alt="" width="114" height="146">
+                                                </a>
+                                            </td>
+                                            <td class="cart-product-name-info">
+                                                <h4 class='cart-product-description'><a
+                                                        href="product-details.php?pid=<?php echo htmlentities($pd=$row['id']);?>"><?php echo 'Táo đỏ Mỹ';
+
+$_SESSION['sid']=$pd;
+						 ?></a></h4>
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        <div class="rating rateit-small"></div>
+                                                    </div>
+                                                    <div class="col-sm-8">
+                                                        <?php $rt=mysqli_query($con,"select * from productreviews where productId='$pd'");
+$num=mysqli_num_rows($rt);
+{
+?>
+                                                        <div class="reviews">
+                                                            ( <?php echo htmlentities($num);?> Reviews )
+                                                        </div>
+                                                        <?php } ?>
+                                                    </div>
+                                                </div><!-- /.row -->
+
+                                            </td>
+                                            <td class="cart-product-quantity">
+                                                <div class="quant-input">
+                                                    <div class="arrows">
+                                                        <div class="arrow plus gradient"><span class="ir"><i
+                                                                    class="icon fa fa-sort-asc"></i></span></div>
+                                                        <div class="arrow minus gradient"><span class="ir"><i
+                                                                    class="icon fa fa-sort-desc"></i></span></div>
+                                                    </div>
+                                                    <input type="text" value="<?php echo 5; ?>"
+                                                        name="quantity[<?php echo 5; ?>]">
+
+                                                </div>
+                                            </td>
+                                            <td class="cart-product-sub-total"><span
+                                                    class="cart-sub-total-price"><?php echo 120000 ." "."VND"; ?></span>
+                                            </td>
+                                            <td class="cart-product-sub-total"><span
+                                                    class="cart-sub-total-price"><?php echo 15000 ." "."VND"; ?></span>
+                                            </td>
+
+                                            <td class="cart-product-grand-total"><span
+                                                    class="cart-grand-total-price"><?php echo 615000 ." "."VND"; ?></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="romove-item"><input type="checkbox" name="remove_code[]"
+                                                    value="<?php echo htmlentities($row['id']);?>" /></td>
+                                            <td class="cart-image">
+                                                <a class="entry-thumbnail" href="detail.html">
+                                                    <img src="https://product.hstatic.net/200000325223/product/sau_rieng_new-01_63392fbb5c3d449e913faebc332ae80f_master.png"
+                                                        alt="" width="114" height="146">
+                                                </a>
+                                            </td>
+                                            <td class="cart-product-name-info">
+                                                <h4 class='cart-product-description'><a
+                                                        href="product-details.php?pid=<?php echo htmlentities($pd=$row['id']);?>"><?php echo 'Sầu riêng ri 6';
+
+$_SESSION['sid']=$pd;
+						 ?></a></h4>
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        <div class="rating rateit-small"></div>
+                                                    </div>
+                                                    <div class="col-sm-8">
+                                                        <?php $rt=mysqli_query($con,"select * from productreviews where productId='$pd'");
+$num=mysqli_num_rows($rt);
+{
+?>
+                                                        <div class="reviews">
+                                                            ( <?php echo htmlentities($num);?> Reviews )
+                                                        </div>
+                                                        <?php } ?>
+                                                    </div>
+                                                </div><!-- /.row -->
+
+                                            </td>
+                                            <td class="cart-product-quantity">
+                                                <div class="quant-input">
+                                                    <div class="arrows">
+                                                        <div class="arrow plus gradient"><span class="ir"><i
+                                                                    class="icon fa fa-sort-asc"></i></span></div>
+                                                        <div class="arrow minus gradient"><span class="ir"><i
+                                                                    class="icon fa fa-sort-desc"></i></span></div>
+                                                    </div>
+                                                    <input type="text" value="<?php echo 1; ?>"
+                                                        name="quantity[<?php echo 1; ?>]">
+
+                                                </div>
+                                            </td>
+                                            <td class="cart-product-sub-total"><span
+                                                    class="cart-sub-total-price"><?php echo 230000 ." "."VND"; ?></span>
+                                            </td>
+                                            <td class="cart-product-sub-total"><span
+                                                    class="cart-sub-total-price"><?php echo 10000 ." "."VND"; ?></span>
+                                            </td>
+
+                                            <td class="cart-product-grand-total"><span
+                                                    class="cart-grand-total-price"><?php echo 240000 ." "."VND"; ?></span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="romove-item"><input type="checkbox" name="remove_code[]"
+                                                    value="<?php echo htmlentities($row['id']);?>" /></td>
+                                            <td class="cart-image">
+                                                <a class="entry-thumbnail" href="detail.html">
+                                                    <img src="https://www.ritafarm.com/wp-content/uploads/2016/01/rau-muong-ritafarm.jpg"
+                                                        alt="" width="114" height="146">
+                                                </a>
+                                            </td>
+                                            <td class="cart-product-name-info">
+                                                <h4 class='cart-product-description'><a
+                                                        href="product-details.php?pid=<?php echo htmlentities($pd=$row['id']);?>"><?php echo 'Rau muống';
+
+$_SESSION['sid']=$pd;
+						 ?></a></h4>
+                                                <div class="row">
+                                                    <div class="col-sm-4">
+                                                        <div class="rating rateit-small"></div>
+                                                    </div>
+                                                    <div class="col-sm-8">
+                                                        <?php $rt=mysqli_query($con,"select * from productreviews where productId='$pd'");
+$num=mysqli_num_rows($rt);
+{
+?>
+                                                        <div class="reviews">
+                                                            ( <?php echo htmlentities($num);?> Reviews )
+                                                        </div>
+                                                        <?php } ?>
+                                                    </div>
+                                                </div><!-- /.row -->
+
+                                            </td>
+                                            <td class="cart-product-quantity">
+                                                <div class="quant-input">
+                                                    <div class="arrows">
+                                                        <div class="arrow plus gradient"><span class="ir"><i
+                                                                    class="icon fa fa-sort-asc"></i></span></div>
+                                                        <div class="arrow minus gradient"><span class="ir"><i
+                                                                    class="icon fa fa-sort-desc"></i></span></div>
+                                                    </div>
+                                                    <input type="text" value="<?php echo 2; ?>"
+                                                        name="quantity[<?php echo 2; ?>]">
+
+                                                </div>
+                                            </td>
+                                            <td class="cart-product-sub-total"><span
+                                                    class="cart-sub-total-price"><?php echo 12000 ." "."VND"; ?></span>
+                                            </td>
+                                            <td class="cart-product-sub-total"><span
+                                                    class="cart-sub-total-price"><?php echo 1000 ." "."VND"; ?></span>
+                                            </td>
+
+                                            <td class="cart-product-grand-total"><span
+                                                    class="cart-grand-total-price"><?php echo 25000 ." "."VND"; ?></span>
+                                            </td>
+                                        </tr>
                                         <?php
  $pdtid=array();
     $sql = "SELECT * FROM products WHERE id IN(";
@@ -287,135 +455,7 @@ $_SESSION['pid']=$pdtid;
 
                         </div>
                     </div><!-- /.shopping-cart-table -->
-                    <div class="col-md-4 col-sm-12 estimate-ship-tax">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        <span class="estimate-title">Shipping Address</span>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="form-group">
-                                            <?php
-$query=mysqli_query($con,"select * from users where id='".$_SESSION['id']."'");
-while($row=mysqli_fetch_array($query))
-{
-?>
 
-                                            <div class="form-group">
-                                                <label class="info-title" for="Billing Address">Billing
-                                                    Address<span>*</span></label>
-                                                <textarea class="form-control unicase-form-control text-input"
-                                                    name="billingaddress"
-                                                    required="required"><?php echo $row['billingAddress'];?></textarea>
-                                            </div>
-
-
-
-                                            <div class="form-group">
-                                                <label class="info-title" for="Billing State ">Billing State
-                                                    <span>*</span></label>
-                                                <input type="text" class="form-control unicase-form-control text-input"
-                                                    id="bilingstate" name="bilingstate"
-                                                    value="<?php echo $row['billingState'];?>" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="info-title" for="Billing City">Billing City
-                                                    <span>*</span></label>
-                                                <input type="text" class="form-control unicase-form-control text-input"
-                                                    id="billingcity" name="billingcity" required="required"
-                                                    value="<?php echo $row['billingCity'];?>">
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="info-title" for="Billing Pincode">Billing Pincode
-                                                    <span>*</span></label>
-                                                <input type="text" class="form-control unicase-form-control text-input"
-                                                    id="billingpincode" name="billingpincode" required="required"
-                                                    value="<?php echo $row['billingPincode'];?>">
-                                            </div>
-
-
-                                            <button type="submit" name="update"
-                                                class="btn-upper btn btn-primary checkout-page-button">Update</button>
-
-                                            <?php } ?>
-
-                                        </div>
-
-                                    </td>
-                                </tr>
-                            </tbody><!-- /tbody -->
-                        </table><!-- /table -->
-                    </div>
-
-                    <div class="col-md-4 col-sm-12 estimate-ship-tax">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        <span class="estimate-title">Billing Address</span>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="form-group">
-                                            <?php
-$query=mysqli_query($con,"select * from users where id='".$_SESSION['id']."'");
-while($row=mysqli_fetch_array($query))
-{
-?>
-
-                                            <div class="form-group">
-                                                <label class="info-title" for="Shipping Address">Shipping
-                                                    Address<span>*</span></label>
-                                                <textarea class="form-control unicase-form-control text-input"
-                                                    name="shippingaddress"
-                                                    required="required"><?php echo $row['shippingAddress'];?></textarea>
-                                            </div>
-
-
-
-                                            <div class="form-group">
-                                                <label class="info-title" for="Billing State ">Shipping State
-                                                    <span>*</span></label>
-                                                <input type="text" class="form-control unicase-form-control text-input"
-                                                    id="shippingstate" name="shippingstate"
-                                                    value="<?php echo $row['shippingState'];?>" required>
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="info-title" for="Billing City">Shipping City
-                                                    <span>*</span></label>
-                                                <input type="text" class="form-control unicase-form-control text-input"
-                                                    id="shippingcity" name="shippingcity" required="required"
-                                                    value="<?php echo $row['shippingCity'];?>">
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="info-title" for="Billing Pincode">Shipping Pincode
-                                                    <span>*</span></label>
-                                                <input type="text" class="form-control unicase-form-control text-input"
-                                                    id="shippingpincode" name="shippingpincode" required="required"
-                                                    value="<?php echo $row['shippingPincode'];?>">
-                                            </div>
-
-
-                                            <button type="submit" name="shipupdate"
-                                                class="btn-upper btn btn-primary checkout-page-button">Update</button>
-                                            <?php } ?>
-
-
-                                        </div>
-
-                                    </td>
-                                </tr>
-                            </tbody><!-- /tbody -->
-                        </table><!-- /table -->
-                    </div>
                     <div class="col-md-4 col-sm-12 cart-shopping-total">
                         <table class="table table-bordered">
                             <thead>
@@ -423,8 +463,7 @@ while($row=mysqli_fetch_array($query))
                                     <th>
 
                                         <div class="cart-grand-total">
-                                            Grand Total<span
-                                                class="inner-left-md"><?php echo $_SESSION['tp']="$totalprice". ".00"; ?></span>
+                                            Grand Total<span class="inner-left-md"><?php echo 880000;?></span><br>VND
                                         </div>
                                     </th>
                                 </tr>
