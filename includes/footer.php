@@ -108,6 +108,18 @@
                                     </div>
                                 </li>
 
+                                <li class="media">
+                                    <div class="pull-left">
+                                        <span class="icon fa-stack fa-lg">
+                                            <i class="fa fa-circle fa-stack-2x"></i>
+                                            <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                                        </span>
+                                    </div>
+                                    <div class="media-body">
+                                        <p><a target="_blank" href="http://localhost/OnlineMarket/admin">Admin</a></p>
+                                    </div>
+                                </li>
+
                             </ul>
                         </div><!-- /.module-body -->
                     </div><!-- /.contact-timing -->

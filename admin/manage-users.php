@@ -1,19 +1,12 @@
 <?php
 session_start();
 include('include/config.php');
-if(strlen($_SESSION['alogin'])==0)
-	{	
-header('location:index.php');
-}
-else{
-date_default_timezone_set('Asia/Kolkata');// change according timezone
-$currentTime = date( 'd-m-Y h:i:s A', time () );
 
-if(isset($_GET['del']))
-		  {
-		          mysqli_query($con,"delete from products where id = '".$_GET['id']."'");
-                  $_SESSION['delmsg']="Product deleted !!";
-		  }
+var_dump($_COOKIE['token']);
+
+//if(is_null($_COOKIE['token']) == 1 && strlen($_COOKIE['token']) == 0){
+//        header('location:index.php');
+//}
 
 ?>
 <!DOCTYPE html>
@@ -47,21 +40,15 @@ if(isset($_GET['del']))
                             </div>
 
                             <div class="module-body table">
-
-                                <?php if(isset($_GET['del']))
-{?>
                                 <div class="alert alert-error">
                                     <button type="button" class="close" data-dismiss="alert">×</button>
                                     <strong>Oh snap!</strong>
                                     <?php echo htmlentities($_SESSION['delmsg']);?><?php echo htmlentities($_SESSION['delmsg']="");?>
                                 </div>
-                                <?php } ?>
 
                                 <br />
 
-
-                                <table cellpadding="0" cellspacing="0" border="0"
-                                    class="datatable-1 table table-bordered table-striped	 display" width="100%">
+                                <table class="datatable-1 table table-bordered table-striped display">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -75,19 +62,7 @@ if(isset($_GET['del']))
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <!-- <tr>
-                                            <td><?php echo 1;?></td>
-                                            <td><?php echo "08ef9wuf9sdufs8fasfsd98";?></td>
-                                            <td><?php echo "Nguyen Van A";?></td>
-                                            <td><?php echo "seller1@gmail.com";?></td>
-                                            <td> <?php echo "0983625745";?></td>
-                                            <td><?php echo "Quận 5";?></td>
-                                            <td class="active"><input type="checkbox" name="active-seller"
-                                                    value="<?php echo false;?>" /></td>
-
-                                        </tr> -->
-                                        <?php
-										//Initialize cURL.
+<?php
 $ch = curl_init();
 
 $token = $_SESSION['token'];
@@ -102,92 +77,38 @@ $headers = array(
     'authorization: '. $auth,
 );
 
-//Set the URL that you want to GET by using the CURLOPT_URL option.
+
 curl_setopt($ch, CURLOPT_URL, 'http://localhost:9000/api/users?active=false&role=seller');
 curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-//Set CURLOPT_RETURNTRANSFER so that the content is returned as a variable.
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-//Set CURLOPT_FOLLOWLOCATION to true to follow redirects.
 curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 
 //Execute the request.
 $data = curl_exec($ch);
 
 $json =  json_decode($data);
-    if ($json->data >= 200 && $json->code < 300)
-    {
-        $_SESSION['alogin']=$_POST['username'];
-        $_SESSION['token']=$json->data->token;
-    }
-//Close the cURL handle.
+if ($json->data >= 200 && $json->code < 300)
+{
+    $_SESSION['alogin']=$_POST['username'];
+    $_SESSION['token']=$json->data->token;
+}
 curl_close($ch);
 
-//Print the data out onto the page.
-echo "<script>console.log($data);</script>";
+    echo '
+        <tr>
+            <td><?php echo htmlentities("stt");?></td>
+            <td><?php echo htmlentities("_id");?></td>
+            <td><?php echo htmlentities("name");?></td>
+            <td> <?php echo htmlentities("email");?></td>
+            <td><?php echo htmlentities("phone");?></td>
+            <td><?php echo htmlentities("Address");?></td>
+            <td class="active"><input type="checkbox" name="active-seller" value="" /></td>
+        </tr>
+    '
 
-$cnt=1;
-while($array)
+
 
 ?>
-                                        <!-- <tr>
-                                            <td><?php echo htmlentities('stt');?></td>
-                                            <td><?php echo htmlentities('_id');?></td>
-                                            <td><?php echo htmlentities('name');?></td>
-                                            <td> <?php echo htmlentities('email');?></td>
-                                            <td><?php echo htmlentities('phone');?>
-                                            </td>
-                                            <td><?php echo htmlentities('Address');?>
-                                            </td>
-                                            <td class="active"><input type="checkbox" name="active-seller"
-                                                    value="<?php echo false;?>" /></td>
-                                        </tr> -->
-                                        <?php $cnt=$cnt+1; } ?>
-                                        <!-- <tr>
-                                            <td><?php echo 2;?></td>
-                                            <td><?php echo "3r22wuf9sdufs8fasfsd98";?></td>
-                                            <td><?php echo "Nguyen Van B";?></td>
-                                            <td><?php echo "seller3@gmail.com";?></td>
-                                            <td> <?php echo "0997687457";?></td>
-                                            <td><?php echo "Huyện cần giờ";?></td>
-                                            <td class="active"><input type="checkbox" name="active-seller"
-                                                    value="<?php echo false;?>" /></td>
-
-                                        </tr>
-                                        <tr>
-                                            <td><?php echo 3;?></td>
-                                            <td><?php echo "fsauf9sdufs8fasfsd98";?></td>
-                                            <td><?php echo "Nguyen Ngoc Anh";?></td>
-                                            <td><?php echo "seller4@gmail.com";?></td>
-                                            <td> <?php echo "0988686745";?></td>
-                                            <td><?php echo "Quận Gò Vấp";?></td>
-                                            <td class="active"><input type="checkbox" name="active-seller"
-                                                    value="<?php echo false;?>" /></td>
-
-                                        </tr>
-                                        <tr>
-                                            <td><?php echo 4;?></td>
-                                            <td><?php echo "34539sdufs8fasfsd98";?></td>
-                                            <td><?php echo "Tran Van Tai";?></td>
-                                            <td><?php echo "seller5@gmail.com";?></td>
-                                            <td> <?php echo "0983667865";?></td>
-                                            <td><?php echo "TP Thủ Đức";?></td>
-                                            <td class="active"><input type="checkbox" name="active-seller"
-                                                    value="<?php echo false;?>" /></td>
-
-                                        </tr>
-                                        <tr>
-                                            <td><?php echo 5;?></td>
-                                            <td><?php echo "653wuf9sdufs8fasfsd98";?></td>
-                                            <td><?php echo "Nguyen Thi Hue";?></td>
-                                            <td><?php echo "seller7@gmail.com";?></td>
-                                            <td> <?php echo "0983534558";?></td>
-                                            <td><?php echo "Quận 7";?></td>
-                                            <td class="active"><input type="checkbox" name="active-seller"
-                                                    value="<?php echo false;?>" /></td>
-
-                                        </tr> -->
-
                                 </table>
                             </div>
                             <span class="">

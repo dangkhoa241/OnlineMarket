@@ -2,6 +2,9 @@
 session_start();
 error_reporting(0);
 include("include/config.php");
+
+var_dump($_COOKIE);
+
 if(isset($_POST['submit']))
 {
 	$username=$_POST['username'];
@@ -13,11 +16,7 @@ if(isset($_POST['submit']))
     $myObj->email = $username;
     $myObj->password = $password;
     $myJSON = json_encode($myObj);
-    
-    //url-ify the data for the POST
 
-    echo "<script>console.log($myJSON);</script>";
-    //open connection
     $ch = curl_init();
     
     //set the url, number of POST vars, POST data
@@ -34,23 +33,16 @@ if(isset($_POST['submit']))
     $json =  json_decode($result);
     if ($json->code >= 200 && $json->code < 300)
     {
-        $_SESSION['alogin']=$_POST['username'];
-        $_SESSION['token']=$json->data->token;
+        $_COOKIE['token']=$json->data->token;
     }
-    
-    echo "<script>console.log($result);</script>";
-    echo "<script>  if($result.code < 200 || $result.code >= 300)
+
+    echo "<script>  
+                    if($result.code < 200 || $result.code >= 300)
                     {   
-                        if (!$result.data)
                         alert('Mật khẩu không chính xác')
-                        else alert($result.data.info);
-                        
                     }
                     else {
-                        
-                        console.log($result.data);
-                        localStorage.setItem('token', $result.data.token);
-                        window.location = 'http://localhost/OnlineMarket/admin/manage-users.php';
+                        header('http://localhost/OnlineMarket/admin/manage-users.php');
                     }
             </script>";
             
