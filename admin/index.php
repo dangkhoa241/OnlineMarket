@@ -3,7 +3,7 @@ session_start();
 error_reporting(0);
 include("include/config.php");
 
-var_dump($_COOKIE);
+//var_dump($_COOKIE);
 
 if(isset($_POST['submit']))
 {
@@ -33,7 +33,8 @@ if(isset($_POST['submit']))
     $json =  json_decode($result);
     if ($json->code >= 200 && $json->code < 300)
     {
-        $_COOKIE['token']=$json->data->token;
+        $_SESSION['alogin']=$username;
+        $_SESSION['token']=$json->data->token;
     }
 
     echo "<script>  
@@ -42,7 +43,7 @@ if(isset($_POST['submit']))
                         alert('Mật khẩu không chính xác')
                     }
                     else {
-                        header('http://localhost/OnlineMarket/admin/manage-users.php');
+                        window.location ='http://localhost/OnlineMarket/admin/manage-users.php';
                     }
             </script>";
             

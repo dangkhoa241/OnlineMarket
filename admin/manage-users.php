@@ -2,7 +2,7 @@
 session_start();
 include('include/config.php');
 
-var_dump($_COOKIE['token']);
+//var_dump($_COOKIE['token']);
 
 //if(is_null($_COOKIE['token']) == 1 && strlen($_COOKIE['token']) == 0){
 //        header('location:index.php');
@@ -40,11 +40,7 @@ var_dump($_COOKIE['token']);
                             </div>
 
                             <div class="module-body table">
-                                <div class="alert alert-error">
-                                    <button type="button" class="close" data-dismiss="alert">×</button>
-                                    <strong>Oh snap!</strong>
-                                    <?php echo htmlentities($_SESSION['delmsg']);?><?php echo htmlentities($_SESSION['delmsg']="");?>
-                                </div>
+
 
                                 <br />
 
@@ -62,14 +58,13 @@ var_dump($_COOKIE['token']);
                                         </tr>
                                     </thead>
                                     <tbody>
-<?php
+                                        <?php
 $ch = curl_init();
 
 $token = $_SESSION['token'];
 
 $auth = 'Bearer ' . $token;
 
-echo "<script>console.log($token);</script>";
 
 $headers = array(
     'Accept: application/json',
@@ -85,30 +80,35 @@ curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 
 //Execute the request.
 $data = curl_exec($ch);
-
+echo "<script>console.log($data);</script>";
 $json =  json_decode($data);
-if ($json->data >= 200 && $json->code < 300)
-{
-    $_SESSION['alogin']=$_POST['username'];
-    $_SESSION['token']=$json->data->token;
-}
+//echo "<script>console.log($json);</script>";
+// if ($json->data >= 200 && $json->code < 300)
+// {
+//     $_SESSION['alogin']=$_POST['username'];
+//     $_SESSION['token']=$json->data->token;
+// }
 curl_close($ch);
+$users = $json->data;
+$l = count($users);
+for ($i = 0; $i < $l; $i++) { 
+    // echo $users[$i]; echo "<br>";
+    ?>
+                                        <tr>
+                                            <td><?php echo $i + 1;?> </td>
+                                            <td><?php echo $users[$i]->_id;?></td>
+                                            <td><?php echo $users[$i]->name;?></td>
+                                            <td> <?php echo $users[$i]->email;?></td>
+                                            <td><?php echo $users[$i]->mobile_number;?></td>
+                                            <td><?php echo $users[$i]->address;?></td>
+                                            <td class="active"><input type="checkbox" name="active-seller" value="" />
+                                            </td>
+                                        </tr>
+                                        <?php
 
-    echo '
-        <tr>
-            <td><?php echo htmlentities("stt");?></td>
-            <td><?php echo htmlentities("_id");?></td>
-            <td><?php echo htmlentities("name");?></td>
-            <td> <?php echo htmlentities("email");?></td>
-            <td><?php echo htmlentities("phone");?></td>
-            <td><?php echo htmlentities("Address");?></td>
-            <td class="active"><input type="checkbox" name="active-seller" value="" /></td>
-        </tr>
-    '
 
 
-
-?>
+                                        } ?>
                                 </table>
                             </div>
                             <span class="">
