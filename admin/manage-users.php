@@ -90,14 +90,16 @@ if(isset($_GET['del']))
 										//Initialize cURL.
 $ch = curl_init();
 
-$token = "<script>document.write(localStorage.getItem('token') || '');</script>";
+$token = $_SESSION['token'];
+
 $auth = 'Bearer ' . $token;
 
+echo "<script>console.log($token);</script>";
 
 $headers = array(
     'Accept: application/json',
     'Content-type: application/json',
-    'Authorization: '. $auth,
+    'authorization: '. $auth,
 );
 
 //Set the URL that you want to GET by using the CURLOPT_URL option.

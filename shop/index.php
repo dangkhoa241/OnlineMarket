@@ -36,6 +36,7 @@ if(isset($_POST['submit']))
     if ($json->code >= 200 && $json->code < 300 && $json->data->role === 'seller')
     {
         $_SESSION['alogin']=$_POST['username'];
+        $_SESSION['token']=$json->data->token;
     }
     
     echo "<script>console.log($result);</script>";
