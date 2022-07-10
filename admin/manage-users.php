@@ -114,28 +114,35 @@ curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 //Execute the request.
 $data = curl_exec($ch);
 
+$json =  json_decode($data);
+    if ($json->data >= 200 && $json->code < 300)
+    {
+        $_SESSION['alogin']=$_POST['username'];
+        $_SESSION['token']=$json->data->token;
+    }
 //Close the cURL handle.
 curl_close($ch);
 
 //Print the data out onto the page.
 echo "<script>console.log($data);</script>";
-// 										 $query=mysqli_query($con,"select * from users");
-// $cnt=1;
-// while($row=mysqli_fetch_array($query))
-// {
+
+$cnt=1;
+while($array)
+
 ?>
                                         <!-- <tr>
-                                            <td><?php echo htmlentities($cnt);?></td>
-                                            <td><?php echo htmlentities($row['name']);?></td>
-                                            <td><?php echo htmlentities($row['email']);?></td>
-                                            <td> <?php echo htmlentities($row['contactno']);?></td>
-                                            <td><?php echo htmlentities($row['shippingAddress'].",".$row['shippingCity'].",".$row['shippingState']."-".$row['shippingPincode']);?>
+                                            <td><?php echo htmlentities('stt');?></td>
+                                            <td><?php echo htmlentities('_id');?></td>
+                                            <td><?php echo htmlentities('name');?></td>
+                                            <td> <?php echo htmlentities('email');?></td>
+                                            <td><?php echo htmlentities('phone');?>
                                             </td>
-                                            <td><?php echo htmlentities($row['billingAddress'].",".$row['billingCity'].",".$row['billingState']."-".$row['billingPincode']);?>
+                                            <td><?php echo htmlentities('Address');?>
                                             </td>
-                                            <td><?php echo htmlentities($row['regDate']);?></td>
+                                            <td class="active"><input type="checkbox" name="active-seller"
+                                                    value="<?php echo false;?>" /></td>
                                         </tr> -->
-                                        <!-- <?php $cnt=$cnt+1; } ?> -->
+                                        <?php $cnt=$cnt+1; } ?>
                                         <!-- <tr>
                                             <td><?php echo 2;?></td>
                                             <td><?php echo "3r22wuf9sdufs8fasfsd98";?></td>
