@@ -43,7 +43,7 @@ if(isset($_POST['submit']))
                         alert('Mật khẩu không chính xác')
                     }
                     else {
-                        window.location ='http://localhost/OnlineMarket/admin/manage-users.php';
+//                        window.location ='http://localhost/OnlineMarket/admin/manage-users.php';
                     }
             </script>";
             

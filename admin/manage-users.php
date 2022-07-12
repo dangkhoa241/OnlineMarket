@@ -2,11 +2,42 @@
 session_start();
 include('include/config.php');
 
-//var_dump($_COOKIE['token']);
+if(isset($_POST['active_seller'])){
+    $url = "http://localhost:9000/api/users/active";
+    $ar = $_POST['active_seller'];
 
-//if(is_null($_COOKIE['token']) == 1 && strlen($_COOKIE['token']) == 0){
-//        header('location:index.php');
-//}
+
+    $myObj = new stdClass();
+
+    foreach($ar as $key => $value) {
+        $myObj->user_id = $ar[0];
+        $myJSON = json_encode($myObj);
+        $ch = curl_init();
+
+        $token = $_SESSION['token'];
+
+        $auth = 'Bearer ' . $token;
+
+
+        $headers = array(
+            'Accept: application/json',
+            'Content-type: application/json',
+            'authorization: '. $auth,
+        );
+
+        //set the url, number of POST vars, POST data
+        curl_setopt($ch,CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch,CURLOPT_POST, true);
+        curl_setopt($ch,CURLOPT_POSTFIELDS, $myJSON);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+
+        //execute post
+        $result = curl_exec($ch);
+        $json =  json_decode($result);
+    }
+}
 
 ?>
 <!DOCTYPE html>
@@ -32,7 +63,7 @@ include('include/config.php');
             <div class="row">
                 <?php include('include/sidebar.php');?>
                 <div class="span9">
-                    <div class="content">
+                    <form class="content" method="post">
 
                         <div class="module">
                             <div class="module-head">
@@ -101,7 +132,7 @@ for ($i = 0; $i < $l; $i++) {
                                             <td> <?php echo $users[$i]->email;?></td>
                                             <td><?php echo $users[$i]->mobile_number;?></td>
                                             <td><?php echo $users[$i]->address;?></td>
-                                            <td class="active"><input type="checkbox" name="active-seller" value="" />
+                                            <td class="active"><input type="checkbox" name="active_seller[]" value="<?php echo $users[$i]->_id;?>" />
                                             </td>
                                         </tr>
                                         <?php
@@ -113,7 +144,7 @@ for ($i = 0; $i < $l; $i++) {
                             </div>
                             <span class="">
 
-                                <input type="submit" name="submit" value="Phê duyệt tài khoản"
+                                <input type="submit" name="submit" value="Active User"
                                     class="btn btn-upper btn-primary pull-right outer-right-xs">
                             </span>
 
