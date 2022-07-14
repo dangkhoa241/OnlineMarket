@@ -111,7 +111,11 @@ include('includes/config.php');
                                 <div class="owl-carousel home-owl-carousel custom-carousel owl-theme" data-item="4">
 
                                     <?php
-                                        $products = getData('products');
+
+                                    $products = getData('products');
+                                    if(isset($_GET['category'])){
+                                        $products = getData('products?category='.$_GET['category']);
+                                    }
 
                                     foreach ($products as $key => $value) {
                                         echo '
