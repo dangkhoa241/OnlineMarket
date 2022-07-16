@@ -146,6 +146,11 @@ for ($i = 0; $i < $l2; $i++) {
                                     </tbody>
                                 </table>
                             </div>
+                            <span class="">
+
+                                <input type="submit" name="submit" value="Active User"
+                                    class="btn btn-upper btn-primary pull-right outer-right-xs">
+                            </span>
                         </div>
 
 

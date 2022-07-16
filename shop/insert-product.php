@@ -1,42 +1,18 @@
 <?php
 session_start();
 include('include/config.php');
-if(strlen($_SESSION['shop-login'])==0)
-	{	
-header('location:index.php');
-}
-else{
-	
-if(isset($_POST['submit']))
-{
-	$category=$_POST['category'];
-	$subcat=$_POST['subcategory'];
-	$productname=$_POST['productName'];
-	$productcompany=$_POST['productCompany'];
-	$productprice=$_POST['productprice'];
-	$productpricebd=$_POST['productpricebd'];
-	$productdescription=$_POST['productDescription'];
-	$productscharge=$_POST['productShippingcharge'];
-	$productavailability=$_POST['productAvailability'];
-	$productimage1=$_FILES["productimage1"]["name"];
-	$productimage2=$_FILES["productimage2"]["name"];
-	$productimage3=$_FILES["productimage3"]["name"];
-//for getting product id
-$query=mysqli_query($con,"select max(id) as pid from products");
-	$result=mysqli_fetch_array($query);
-	 $productid=$result['pid']+1;
-	$dir="productimages/$productid";
-if(!is_dir($dir)){
-		mkdir("productimages/".$productid);
-	}
+if (strlen($_SESSION['alogin']) == 0) {
+    header('location:index.php');
+} else {
 
-	move_uploaded_file($_FILES["productimage1"]["tmp_name"],"productimages/$productid/".$_FILES["productimage1"]["name"]);
-	move_uploaded_file($_FILES["productimage2"]["tmp_name"],"productimages/$productid/".$_FILES["productimage2"]["name"]);
-	move_uploaded_file($_FILES["productimage3"]["tmp_name"],"productimages/$productid/".$_FILES["productimage3"]["name"]);
-$sql=mysqli_query($con,"insert into products(category,subCategory,productName,productCompany,productPrice,productDescription,shippingCharge,productAvailability,productImage1,productImage2,productImage3,productPriceBeforeDiscount) values('$category','$subcat','$productname','$productcompany','$productprice','$productdescription','$productscharge','$productavailability','$productimage1','$productimage2','$productimage3','$productpricebd')");
-$_SESSION['msg']="Product Inserted Successfully !!";
+    if (isset($_POST['submit'])) {
+        $url = "http://localhost:9000/api/products";
+        $name = $_POST['productName'];
+        $category = $_POST['category'];
+        $productdescription = $_POST['productDecription'];
+        $productprice = $_POST['productPrice'];
+        $productimage = $_POST['productImage'];
 
-<<<<<<< HEAD
         $myObj = new stdClass();
         $myObj->name = $name;
         $myObj->price = $productprice;
@@ -73,11 +49,6 @@ $_SESSION['msg']="Product Inserted Successfully !!";
         
         
     }
-=======
-}
-
-
->>>>>>> refs/remotes/origin/main
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -96,59 +67,15 @@ $_SESSION['msg']="Product Inserted Successfully !!";
     <script type="text/javascript">
     bkLib.onDomLoaded(nicEditors.allTextAreas);
     </script>
-
-    <script>
-    function getSubcat(val) {
-        $.ajax({
-            type: "POST",
-            url: "get_subcat.php",
-            data: 'cat_id=' + val,
-            success: function(data) {
-                $("#subcategory").html(data);
-            }
-        });
-    }
-
-<<<<<<< HEAD
-        <div class="wrapper">
-            <div class="container">
-                <div class="row">
-                    <?php include('include/sidebar.php'); ?>
-                    <div class="span9">
-                        <div class="content">
-
-                            <div class="module">
-                                <div class="module-head">
-                                    <h3>Insert Product</h3>
-                                </div>
-                                <div class="module-body">
-
-                                    <?php if (isset($_POST['submit'])) { ?>
-                                        <div class="alert alert-success">
-                                            
-                                            <button type="button" class="close" data-dismiss="alert">×</button>
-                                            <strong>Well done! You have just create a product</strong>
-                                            <?php echo htmlentities($_SESSION['msg']); ?><?php echo htmlentities($_SESSION['msg'] = ""); ?>
-                                        </div>
-                                    <?php } ?>
-=======
-    function selectCountry(val) {
-        $("#search-box").val(val);
-        $("#suggesstion-box").hide();
-    }
-    </script>
->>>>>>> refs/remotes/origin/main
-
-
 </head>
 
 <body>
-    <?php include('include/header.php');?>
+    <?php include('include/header.php'); ?>
 
     <div class="wrapper">
         <div class="container">
             <div class="row">
-                <?php include('include/sidebar.php');?>
+                <?php include('include/sidebar.php'); ?>
                 <div class="span9">
                     <div class="content">
 
@@ -158,22 +85,22 @@ $_SESSION['msg']="Product Inserted Successfully !!";
                             </div>
                             <div class="module-body">
 
-                                <?php if(isset($_POST['submit']))
-{?>
+                                <?php if (isset($_POST['submit'])) { ?>
                                 <div class="alert alert-success">
+
                                     <button type="button" class="close" data-dismiss="alert">×</button>
-                                    <strong>Well done!</strong>
-                                    <?php echo htmlentities($_SESSION['msg']);?><?php echo htmlentities($_SESSION['msg']="");?>
+                                    <strong>Well done! You have just create a product</strong>
+                                    <?php echo htmlentities($_SESSION['msg']); ?><?php echo htmlentities($_SESSION['msg'] = ""); ?>
                                 </div>
                                 <?php } ?>
 
 
-                                <?php if(isset($_GET['del']))
-{?>
+                                <?php if (isset($_GET['del'])) { ?>
+
                                 <div class="alert alert-error">
                                     <button type="button" class="close" data-dismiss="alert">×</button>
                                     <strong>Oh snap!</strong>
-                                    <?php echo htmlentities($_SESSION['delmsg']);?><?php echo htmlentities($_SESSION['delmsg']="");?>
+                                    <?php echo htmlentities($_SESSION['delmsg']); ?><?php echo htmlentities($_SESSION['delmsg'] = ""); ?>
                                 </div>
                                 <?php } ?>
 
@@ -181,19 +108,17 @@ $_SESSION['msg']="Product Inserted Successfully !!";
 
                                 <form class="form-horizontal row-fluid" name="insertproduct" method="post"
                                     enctype="multipart/form-data">
-
                                     <div class="control-group">
                                         <label class="control-label" for="basicinput">Category</label>
                                         <div class="controls">
                                             <select name="category" class="span8 tip" onChange="getSubcat(this.value);"
                                                 required>
                                                 <option value="">Select Category</option>
-                                                <?php $query=mysqli_query($con,"select * from category");
-while($row=mysqli_fetch_array($query))
-{?>
-
-                                                <option value="<?php echo $row['id'];?>">
-                                                    <?php echo $row['categoryName'];?></option>
+                                                <?php include('../includes/config.php');
+                                                    $category = getData('categories');
+                                                    foreach ($category as $key => $value) { ?>
+                                                <option value="<?php echo $value->_id; ?>">
+                                                    <?php echo $value->name; ?></option>
                                                 <?php } ?>
                                             </select>
                                         </div>
@@ -257,7 +182,7 @@ while($row=mysqli_fetch_array($query))
     </div>
     <!--/.wrapper-->
 
-    <?php include('include/footer.php');?>
+    <?php include('include/footer.php'); ?>
 
     <script src="scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
     <script src="scripts/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
