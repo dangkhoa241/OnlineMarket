@@ -6,8 +6,12 @@ if(strlen($_SESSION['shop-login'])==0)
 header('location:index.php');
 }
 else{
-date_default_timezone_set('Asia/Kolkata');// change according timezone
-$currentTime = date( 'd-m-Y h:i:s A', time () );
+
+if ($_GET['id'] != "")
+{
+    $id = $_GET['id'];
+}
+
 
 
 ?>
@@ -17,7 +21,7 @@ $currentTime = date( 'd-m-Y h:i:s A', time () );
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop | Pending Orders</title>
+    <title>Shop | New Orders</title>
     <link type="text/css" href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link type="text/css" href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
     <link type="text/css" href="css/theme.css" rel="stylesheet">
@@ -50,7 +54,8 @@ $currentTime = date( 'd-m-Y h:i:s A', time () );
 
                         <div class="module">
                             <div class="module-head">
-                                <h3>Pending Orders</h3>
+                                <h3>Orders Detail</h3>
+                                <h3>Orders ID: <?php echo $_GET['id'];?></h3>
                             </div>
                             <div class="module-body table">
 
@@ -60,15 +65,11 @@ $currentTime = date( 'd-m-Y h:i:s A', time () );
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th>OrderID</th>
-                                            <th>CustomerID</th>
-                                            <th>Payment Method</th>
-                                            <th>Order Date</th>
-                                            <th>Confirm Date</th>
-                                            <th>Delivery Date</th>
-                                            <th>Total Price</th>
-                                            <th>Status</th>
-
+                                            <th>ID</th>
+                                            <th>Name</th>
+                                            <th>Image</th>
+                                            <th>Price</th>
+                                            <th>Quantity</th>
 
                                         </tr>
                                     </thead>
@@ -106,43 +107,34 @@ $json =  json_decode($data);
 // }
 curl_close($ch);
 $orders = $json->data;
-$shop_orders = [];
+$order_detail = [];
 $l1 = count($json->data);
 for ($i = 0; $i < $l1; $i++){
-    $l= count($orders[$i]->products);
-    for($j = 0; $j < $l; $j++){
-        if($orders[$i]->products[$j]->shop_id = $id){
-            $shop_orders[$i] = $orders[$i];
-            $j = $l;
+    if($orders[$i]->_id == $_GET['id']){
+            $order_detail = $orders[$i]->products;
+            break;
         }   
     } 
 }
 
-$l2 = count($shop_orders);
+$l2 = count($order_detail);
 $c = 0;
 for ($i = 0; $i < $l2; $i++) {
-    if($shop_orders[$i]->status === "Đang giao"){ 
-    // echo $users[$i]; echo "<br>";
     $c++;
     ?>
                                         <tr>
                                             <td><?php echo $c;?> </td>
-                                            <td><a href="order-detail.php?id=<?php echo $shop_orders[$i]->_id ?>">
-                                                    <?php echo $shop_orders[$i]->_id;?>
-                                                </a>
-                                            </td>
-                                            <td><?php echo $shop_orders[$i]->buyer_id;?></td>
-                                            <td><?php echo $shop_orders[$i]->payment_method;?></td>
-                                            <td><?php echo $shop_orders[$i]->order_date;?></td>
-                                            <td><?php echo $shop_orders[$i]->confirm_date;?></td>
-                                            <td><?php echo $shop_orders[$i]->delivery_date;?></td>
-                                            <td><?php echo $shop_orders[$i]->total_price;?></td>
-                                            <td><?php echo $shop_orders[$i]->status;?></td>
+                                            <td><?php echo $order_detail[$i]->_id;?></td>
+                                            <td><?php echo $order_detail[$i]->product_name;?></td>
+                                            <td><img src="<?php echo $order_detail[$i]->images[0];?>" alt="" width="150"
+                                                    height="150"></td>
+                                            <td><?php echo $order_detail[$i]->price;?></td>
+                                            <td><?php echo $order_detail[$i]->quantity;?></td>
+
+
 
                                         </tr>
                                         <?php
-    }
-
 
                                         } ?>
                                     </tbody>
@@ -179,4 +171,3 @@ for ($i = 0; $i < $l2; $i++) {
     });
     </script>
 </body>
-<?php } ?>

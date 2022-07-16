@@ -55,7 +55,7 @@ if(isset($_POST['confirm_order'])){
     <meta name="keywords" content="MediaCenter, Template, eCommerce">
     <meta name="robots" content="all">
 
-    <title>My Order</title>
+    <title>Order Detail</title>
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/main.css">
     <link rel="stylesheet" href="assets/css/green.css">
@@ -109,7 +109,7 @@ if(isset($_POST['confirm_order'])){
             <div class="breadcrumb-inner">
                 <ul class="list-inline list-unstyled">
                     <li><a href="#">Home</a></li>
-                    <li class='active'>My Orders</li>
+                    <li class='active'>Orders Detail</li>
                 </ul>
             </div><!-- /.breadcrumb-inner -->
         </div><!-- /.container -->
@@ -121,21 +121,19 @@ if(isset($_POST['confirm_order'])){
                 <div class="shopping-cart">
                     <div class="col-md-12 col-sm-12 shopping-cart-table ">
                         <div class="table-responsive">
+                            <h3>OrderID: <?php echo $_GET['id'];?></h3>
                             <form name="content" method="post">
 
                                 <table class="datatable-1 table table-bordered table-striped	 display table-responsive">
                                     <thead>
                                         <tr>
-
                                             <th class="cart-romove item">#</th>
-                                            <th class="cart-description item">OrderID</th>
-                                            <th class="cart-total item">Payment Method</th>
-                                            <th class="cart-description item">Total Price</th>
-                                            <th class="cart-description item">Order Date</th>
-                                            <th class="cart-description item">Confirm Date</th>
-                                            <th class="cart-description item">Delivery Date</th>
-                                            <th class="cart-total last-item">Status</th>
-                                            <th class="cart-total last-item">Received</th>
+                                            <th class="cart-description item">ID</th>
+                                            <th class="cart-description item">Name</th>
+                                            <th class="cart-description item">Image</th>
+                                            <th class="cart-description item">Price</th>
+                                            <th class="cart-description item">Quantity</th>
+                                            <th class="cart-total last-item">ShopID</th>
                                         </tr>
                                     </thead><!-- /thead -->
 
@@ -175,48 +173,39 @@ $orders = $json->data;
 $cus_orders = [];
 $l1 = count($json->data);
 for ($i = 0; $i < $l1; $i++){
-    if($orders[$i]->buyer_id = $id){
-            $cus_orders[$i] = $orders[$i];
-            $j = $l;
-        }  
-}
+    if($orders[$i]->_id == $_GET['id']){
+            $order_detail = $orders[$i]->products;
+            break;
+        }   
+    } 
 
-$l2 = count($cus_orders);
+
+$l2 = count($order_detail);
 $c = 0;
 for ($i = 0; $i < $l2; $i++) {
-    if($cus_orders[$i]->status === "Đang giao"){ 
-    // echo $users[$i]; echo "<br>";
     $c++;
     ?>
                                         <tr>
                                             <td><?php echo $c;?> </td>
-                                            <td><a href="order-detail.php?id=<?php echo $cus_orders[$i]->_id ?>">
-                                                    <?php echo $cus_orders[$i]->_id;?>
-                                                </a>
+                                            <td><?php echo $order_detail[$i]->_id;?></td>
+                                            <td><?php echo $order_detail[$i]->product_name;?></td>
+                                            <td><img src="<?php echo $order_detail[$i]->images[0];?>" alt="" width="150"
+                                                    height="150">
                                             </td>
-                                            <td><?php echo $cus_orders[$i]->payment_method;?></td>
-                                            <td><?php echo $cus_orders[$i]->order_date;?></td>
-                                            <td><?php echo $cus_orders[$i]->confirm_date;?></td>
-                                            <td><?php echo $cus_orders[$i]->delivery_date;?></td>
-                                            <td><?php echo $cus_orders[$i]->total_price;?></td>
-                                            <td><?php echo $cus_orders[$i]->status;?></td>
-                                            <td class="confirm"><input type="checkbox" name="confirm_order[]"
-                                                    value="<?php echo $cus_orders[$i]->_id;?>" />
-                                            </td>
+                                            <td><?php echo $order_detail[$i]->price;?></td>
+                                            <td><?php echo $order_detail[$i]->quantity;?></td>
+                                            <td><?php echo $order_detail[$i]->shop_id;?></td>
+
+
                                         </tr>
                                         <?php
-    }
 
 
                                         } ?>
 
                                 </table>
                         </div>
-                        <span class="">
 
-                            <input type="submit" name="submit" value="Received Confirm"
-                                class="btn btn-upper btn-primary pull-right outer-right-xs">
-                        </span>
                     </div>
 
                 </div><!-- /.shopping-cart -->

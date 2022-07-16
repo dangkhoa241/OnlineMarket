@@ -12,13 +12,13 @@ if(isset($_POST['confirm_order'])){
     $ar = $_POST['confirm_order'];
     $url = "http://localhost:9000/api/orders/" . $ar[0];
 
-    echo $url;
+
     $myObj = new stdClass();
     $myObj->status = "Đang giao";
     
     $myJSON = json_encode($myObj);
     $ch = curl_init();
-    echo $myJSON;
+
     $token = $_SESSION['shop-token'];
 
     $auth = 'Bearer ' . $token;
@@ -164,7 +164,10 @@ for ($i = 0; $i < $l2; $i++) {
     ?>
                                         <tr>
                                             <td><?php echo $c;?> </td>
-                                            <td><?php echo $shop_orders[$i]->_id;?></td>
+                                            <td><a href="order-detail.php?id=<?php echo $shop_orders[$i]->_id ?>">
+                                                    <?php echo $shop_orders[$i]->_id;?>
+                                                </a>
+                                            </td>
                                             <td><?php echo $shop_orders[$i]->buyer_id;?></td>
                                             <td><?php echo $shop_orders[$i]->payment_method;?></td>
                                             <td><?php echo $shop_orders[$i]->order_date;?></td>
