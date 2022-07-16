@@ -43,9 +43,9 @@ $currentTime = date( 'd-m-Y h:i:s A', time () );
 
     <div class="wrapper">
         <div class="container">
-            <div class="row">
+            <div class="row" width="1300px">
                 <?php include('include/sidebar.php');?>
-                <div class="span9">
+                <div class="span12">
                     <div class="content">
 
                         <div class="module">
@@ -61,15 +61,14 @@ $currentTime = date( 'd-m-Y h:i:s A', time () );
                                         <tr>
                                             <th>#</th>
                                             <th>OrderID</th>
-                                            <th width="50">CustomerID</th>
-                                            <th>Order Detail</th>
+                                            <th>CustomerID</th>
                                             <th>Payment Method</th>
                                             <th>Order Date</th>
                                             <th>Confirm Date</th>
                                             <th>Delivery Date</th>
                                             <th>Total Price</th>
-                                            <th>Order Date</th>
                                             <th>Status</th>
+                                            <th>Confirm</th>
 
 
                                         </tr>
@@ -109,27 +108,38 @@ $json =  json_decode($data);
 curl_close($ch);
 $orders = $json->data;
 $shop_orders = [];
-$l = count($json->data);
-for ($i = 0; $i < $l; $i++){
-    $orders[$i]->
+$l1 = count($json->data);
+for ($i = 0; $i < $l1; $i++){
+    $l= count($orders[$i]->products);
+    for($j = 0; $j < $l; $j++){
+        if($orders[$i]->products[$j]->shop_id = $id){
+            $shop_orders[$i] = $orders[$i];
+            $j = $l;
+        }   
+    } 
 }
 
-for ($i = 0; $i < $l; $i++) { 
+$l2 = count($shop_orders);
+for ($i = 0; $i < $l2; $i++) {
+    if($shop_orders[$i]->status === "Chờ xác nhận"){ 
     // echo $users[$i]; echo "<br>";
     ?>
                                         <tr>
                                             <td><?php echo $i + 1;?> </td>
-                                            <td><?php echo $users[$i]->_id;?></td>
-                                            <td><?php echo $users[$i]->name;?></td>
-                                            <td> <?php echo $users[$i]->email;?></td>
-                                            <td><?php echo $users[$i]->mobile_number;?></td>
-                                            <td><?php echo $users[$i]->address;?></td>
-                                            <td class="active"><input type="checkbox" name="active_seller[]"
-                                                    value="<?php echo $users[$i]->_id;?>" />
+                                            <td><?php echo $shop_orders[$i]->_id;?></td>
+                                            <td><?php echo $shop_orders[$i]->buyer_id;?></td>
+                                            <td><?php echo $shop_orders[$i]->payment_method;?></td>
+                                            <td><?php echo $shop_orders[$i]->order_date;?></td>
+                                            <td><?php echo $shop_orders[$i]->confirm_date;?></td>
+                                            <td><?php echo $shop_orders[$i]->delivery_date;?></td>
+                                            <td><?php echo $shop_orders[$i]->total_price;?></td>
+                                            <td><?php echo $shop_orders[$i]->status;?></td>
+                                            <td class="confirm"><input type="checkbox" name="active_seller[]"
+                                                    value="<?php echo $shop_orders[$i]->_id;?>" />
                                             </td>
                                         </tr>
                                         <?php
-
+    }
 
 
                                         } ?>

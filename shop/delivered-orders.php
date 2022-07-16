@@ -17,7 +17,7 @@ $currentTime = date( 'd-m-Y h:i:s A', time () );
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop | Delivered Orders</title>
+    <title>Shop | New Orders</title>
     <link type="text/css" href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link type="text/css" href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
     <link type="text/css" href="css/theme.css" rel="stylesheet">
@@ -43,73 +43,103 @@ $currentTime = date( 'd-m-Y h:i:s A', time () );
 
     <div class="wrapper">
         <div class="container">
-            <div class="row">
+            <div class="row" width="1300px">
                 <?php include('include/sidebar.php');?>
-                <div class="span9">
+                <div class="span12">
                     <div class="content">
 
                         <div class="module">
                             <div class="module-head">
-                                <h3>Delivered Orders</h3>
+                                <h3>New Orders</h3>
                             </div>
                             <div class="module-body table">
-                                <?php if(isset($_GET['del']))
-{?>
-                                <div class="alert alert-error">
-                                    <button type="button" class="close" data-dismiss="alert">×</button>
-                                    <strong>Oh snap!</strong>
-                                    <?php echo htmlentities($_SESSION['delmsg']);?><?php echo htmlentities($_SESSION['delmsg']="");?>
-                                </div>
-                                <?php } ?>
 
                                 <br />
-
-
                                 <table cellpadding="0" cellspacing="0" border="0"
                                     class="datatable-1 table table-bordered table-striped	 display table-responsive">
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <th> Name</th>
-                                            <th width="50">Email /Contact no</th>
-                                            <th>Shipping Address</th>
-                                            <th>Product </th>
-                                            <th>Qty </th>
-                                            <th>Amount </th>
+                                            <th>OrderID</th>
+                                            <th>CustomerID</th>
+                                            <th>Payment Method</th>
                                             <th>Order Date</th>
-                                            <th>Action</th>
+                                            <th>Confirm Date</th>
+                                            <th>Delivery Date</th>
+                                            <th>Total Price</th>
+                                            <th>Status</th>
 
 
                                         </tr>
                                     </thead>
 
                                     <tbody>
-                                        <?php 
-$st='Delivered';
-$query=mysqli_query($con,"select users.name as username,users.email as useremail,users.contactno as usercontact,users.shippingAddress as shippingaddress,users.shippingCity as shippingcity,users.shippingState as shippingstate,users.shippingPincode as shippingpincode,products.productName as productname,products.shippingCharge as shippingcharge,orders.quantity as quantity,orders.orderDate as orderdate,products.productPrice as productprice,orders.id as id  from orders join users on  orders.userId=users.id join products on products.id=orders.productId where orders.orderStatus='$st'");
-$cnt=1;
-while($row=mysqli_fetch_array($query))
-{
-?>
+                                        <?php
+$ch = curl_init();
+$id = $_SESSION['id'];
+$token = $_SESSION['token'];
+
+$auth = 'Bearer ' . $token;
+
+
+$headers = array(
+    'Accept: application/json',
+    'Content-type: application/json',
+    'authorization: '. $auth,
+);
+
+
+curl_setopt($ch, CURLOPT_URL, 'http://localhost:9000/api/orders');
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+
+//Execute the request.
+$data = curl_exec($ch);
+echo "<script>console.log($data);</script>";
+$json =  json_decode($data);
+//echo "<script>console.log($json);</script>";
+// if ($json->data >= 200 && $json->code < 300)
+// {
+//     $_SESSION['alogin']=$_POST['username'];
+//     $_SESSION['token']=$json->data->token;
+// }
+curl_close($ch);
+$orders = $json->data;
+$shop_orders = [];
+$l1 = count($json->data);
+for ($i = 0; $i < $l1; $i++){
+    $l= count($orders[$i]->products);
+    for($j = 0; $j < $l; $j++){
+        if($orders[$i]->products[$j]->shop_id = $id){
+            $shop_orders[$i] = $orders[$i];
+            $j = $l;
+        }   
+    } 
+}
+
+$l2 = count($shop_orders);
+for ($i = 0; $i < $l2; $i++) {
+    if($shop_orders[$i]->status === "Đã giao thành công"){ 
+    // echo $users[$i]; echo "<br>";
+    ?>
                                         <tr>
-                                            <td><?php echo htmlentities($cnt);?></td>
-                                            <td><?php echo htmlentities($row['username']);?></td>
-                                            <td><?php echo htmlentities($row['useremail']);?>/<?php echo htmlentities($row['usercontact']);?>
-                                            </td>
+                                            <td><?php echo $i + 1;?> </td>
+                                            <td><?php echo $shop_orders[$i]->_id;?></td>
+                                            <td><?php echo $shop_orders[$i]->buyer_id;?></td>
+                                            <td><?php echo $shop_orders[$i]->payment_method;?></td>
+                                            <td><?php echo $shop_orders[$i]->order_date;?></td>
+                                            <td><?php echo $shop_orders[$i]->confirm_date;?></td>
+                                            <td><?php echo $shop_orders[$i]->delivery_date;?></td>
+                                            <td><?php echo $shop_orders[$i]->total_price;?></td>
+                                            <td><?php echo $shop_orders[$i]->status;?></td>
 
-                                            <td><?php echo htmlentities($row['shippingaddress'].",".$row['shippingcity'].",".$row['shippingstate']."-".$row['shippingpincode']);?>
-                                            </td>
-                                            <td><?php echo htmlentities($row['productname']);?></td>
-                                            <td><?php echo htmlentities($row['quantity']);?></td>
-                                            <td><?php echo htmlentities($row['quantity']*$row['productprice']+$row['shippingcharge']);?>
-                                            </td>
-                                            <td><?php echo htmlentities($row['orderdate']);?></td>
-                                            <td> <a href="updateorder.php?oid=<?php echo htmlentities($row['id']);?>"
-                                                    title="Update order" target="_blank"><i class="icon-edit"></i></a>
-                                            </td>
                                         </tr>
+                                        <?php
+    }
 
-                                        <?php $cnt=$cnt+1; } ?>
+
+                                        } ?>
                                     </tbody>
                                 </table>
                             </div>
