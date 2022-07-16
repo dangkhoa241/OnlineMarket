@@ -42,41 +42,13 @@ if (strlen($_SESSION['alogin']) == 0) {
 
         //execute post
         $result = curl_exec($ch);
-        // curl_close($ch);
+        if ($result==TRUE) {$_SESSION['msg'] = "Product Inserted Successfully !!";} 
+        else {$_SESSION['msg'] = "Product Inserted Failed !!";}
+        curl_close($ch);
 
-        $_SESSION['msg'] = "Product Inserted Successfully !!";
+        
     }
 ?>
-
-
-    <?php
-    $url = "http://localhost:9000/api/categories";
-    $myObj = new stdClass();
-    $myJSON = json_encode($myObj);
-    $ch = curl_init();
-    $token = $_SESSION['token'];
-    $auth = 'Bearer ' . $token;
-
-
-    $headers = array(
-        'Accept: application/json',
-        'Content-type: application/json',
-        'authorization: ' . $auth,
-    );
-
-    //set the url, number of POST vars, POST data
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_POST, true);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $myJSON);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-
-    //execute post
-    $result = curl_exec($ch);
-    curl_close($ch);
-    ?>
-
     <!DOCTYPE html>
     <html lang="en">
 
