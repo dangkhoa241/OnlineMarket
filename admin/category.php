@@ -14,7 +14,7 @@ $currentTime = date('d-m-Y h:i:s A', time());
 <html lang="en">
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin| Category</title>
     <link type="text/css" href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -22,26 +22,26 @@ $currentTime = date('d-m-Y h:i:s A', time());
     <link type="text/css" href="css/theme.css" rel="stylesheet">
     <link type="text/css" href="images/icons/css/font-awesome.css" rel="stylesheet">
     <link type="text/css" href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,600italic,400,600'
-          rel='stylesheet'>
+        rel='stylesheet'>
 </head>
 
 <body>
-<?php include('include/header.php'); ?>
+    <?php include('include/header.php'); ?>
 
-<div class="wrapper">
-    <div class="container">
-        <div class="row">
-            <?php include('include/sidebar.php'); ?>
-            <div class="span9">
-                <div class="content">
+    <div class="wrapper">
+        <div class="container">
+            <div class="row">
+                <?php include('include/sidebar.php'); ?>
+                <div class="span9">
+                    <div class="content">
 
-                    <div class="module">
-                        <div class="module-head">
-                            <h3>Category</h3>
-                        </div>
-                        <div class="module-body">
+                        <div class="module">
+                            <div class="module-head">
+                                <h3>Category</h3>
+                            </div>
+                            <div class="module-body">
 
-                            <?php if (isset($_POST['submit'])) {
+                                <?php if (isset($_POST['submit'])) {
                                 ?>
 
                                 <?php
@@ -78,63 +78,64 @@ $currentTime = date('d-m-Y h:i:s A', time());
                                 curl_close($ch);
                                 ?>
 
-                            <?php } ?>
+                                <?php } ?>
 
 
-                            <br/>
+                                <br />
 
-                            <form class="form-horizontal row-fluid" name="Category" method="post">
+                                <form class="form-horizontal row-fluid" name="Category" method="post">
 
-                                <div class="control-group">
-                                    <label class="control-label" for="basicinput">Category Name</label>
-                                    <div class="controls">
-                                        <input type="text" placeholder="Enter category Name" name="name"
-                                               class="span8 tip" required>
+                                    <div class="control-group">
+                                        <label class="control-label" for="basicinput">Category Name</label>
+                                        <div class="controls">
+                                            <input type="text" placeholder="Enter category Name" name="name"
+                                                class="span8 tip" required>
+                                        </div>
                                     </div>
-                                </div>
 
 
-                                <div class="control-group">
-                                    <label class="control-label" for="basicinput">Description</label>
-                                    <div class="controls">
-                                        <textarea class="span8" name="description" rows="5"></textarea>
+                                    <div class="control-group">
+                                        <label class="control-label" for="basicinput">Description</label>
+                                        <div class="controls">
+                                            <textarea class="span8" name="description" rows="5"></textarea>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="control-group">
-                                    <div class="controls">
-                                        <button type="submit" name="submit" class="btn">Create</button>
+                                    <div class="control-group">
+                                        <div class="controls">
+                                            <button type="submit" name="submit" class="btn">Create</button>
+                                        </div>
                                     </div>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
                         </div>
-                    </div>
 
 
-                    <div class="module">
-                        <div class="module-head">
-                            <h3>Manage Categories</h3>
-                        </div>
-                        <div class="module-body table">
-                            <table class="datatable-1 table table-bordered table-striped display">
-                                <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Category</th>
-                                    <th>Description</th>
-                                </tr>
-                                </thead>
+                        <div class="module">
+                            <div class="module-head">
+                                <h3>Manage Categories</h3>
+                            </div>
+                            <div class="module-body table">
+                                <table class="datatable-1 table table-bordered table-striped display">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Category</th>
+                                            <th>Description</th>
+                                        </tr>
+                                    </thead>
 
-                                <tbody>
+                                    <tbody>
 
-                                <?php
+                                        <?php
                                 include('../includes/config.php');
                                 $category = getData('categories');
-
+                                $i = 1;
                                 foreach ($category as $key => $value) {
+                                    
                                     echo "
                                     <tr>
-                                        <td>" . $value->_id . "</td>
+                                        <td>" . $i++ . "</td>
                                         <td>" . $value->name . "</td>
                                         <td>" . $value->description . "</td>
                                     </tr>          
@@ -142,37 +143,37 @@ $currentTime = date('d-m-Y h:i:s A', time());
                                 }
                                 ?>
 
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
+
+
                     </div>
-
-
+                    <!--/.content-->
                 </div>
-                <!--/.content-->
+                <!--/.span9-->
             </div>
-            <!--/.span9-->
         </div>
+        <!--/.container-->
     </div>
-    <!--/.container-->
-</div>
-<!--/.wrapper-->
+    <!--/.wrapper-->
 
-<?php include('include/footer.php'); ?>
+    <?php include('include/footer.php'); ?>
 
-<script src="scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
-<script src="scripts/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
-<script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="scripts/flot/jquery.flot.js" type="text/javascript"></script>
-<script src="scripts/datatables/jquery.dataTables.js"></script>
-<script>
-    $(document).ready(function () {
+    <script src="scripts/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="scripts/jquery-ui-1.10.1.custom.min.js" type="text/javascript"></script>
+    <script src="bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="scripts/flot/jquery.flot.js" type="text/javascript"></script>
+    <script src="scripts/datatables/jquery.dataTables.js"></script>
+    <script>
+    $(document).ready(function() {
         $('.datatable-1').dataTable();
         $('.dataTables_paginate').addClass("btn-group datatable-pagination");
         $('.dataTables_paginate > a').wrapInner('<span />');
         $('.dataTables_paginate > a:first-child').append('<i class="icon-chevron-left shaded"></i>');
         $('.dataTables_paginate > a:last-child').append('<i class="icon-chevron-right shaded"></i>');
     });
-</script>
+    </script>
 </body>
 <?php } ?>
