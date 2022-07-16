@@ -27,12 +27,12 @@ function user_order() {
 }
 
 const createOrder = () => {
-    let cart = localStorage.getItem('cart');
-    if (!cart) cart = '{}';
-    cart = JSON.parse(cart);
-    cart = Object.values(cart).map(c => ({product_id: c._id, quantity: c.quantity}));
-
     document.getElementById('id_dat_hang').addEventListener('click', function (e) {
+        let cart = localStorage.getItem('cart');
+        if (!cart) cart = '{}';
+        cart = JSON.parse(cart);
+        cart = Object.values(cart).map(c => ({product_id: c._id, quantity: c.quantity}));
+        if(cart.length <= 0) return alert('Chưa có sản phẩm');
         // call api
         const getUser = async () => {
             const res = await fetch('http://localhost:9000/api/users');
@@ -53,13 +53,14 @@ const createOrder = () => {
                         "user_id" : buyer[i]._id
                     })
                 });
-                const {data} = await res.json();
-
-                console.log(data);
+                const json = await res.json();
             }
         }
         getUser();
+        alert('đặt hàng thành công')
         // remove from local store
+        localStorage.setItem('cart', '{}');
+        location.reload();
     })
 };
 
