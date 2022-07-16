@@ -37,6 +37,7 @@ if(isset($_POST['submit']))
     {
         $_SESSION['alogin']=$_POST['username'];
         $_SESSION['token']=$json->data->token;
+        $_SESSION['id']=$json->data->_id;
     }
     
     echo "<script>console.log($result);</script>";
