@@ -16,7 +16,7 @@ if (strlen($_SESSION['alogin']) == 0) {
         $myObj = new stdClass();
         $myObj->name = $name;
         $myObj->price = $productprice;
-        $myObj->image = $productimage;
+        $myObj->images[0] = $productimage;
         $myObj->description = $productdescription;
         $myObj->category = $category;
 
@@ -42,10 +42,11 @@ if (strlen($_SESSION['alogin']) == 0) {
 
         //execute post
         $result = curl_exec($ch);
-        if ($result==TRUE) {$_SESSION['msg'] = "Product Inserted Successfully !!";} 
-        else {$_SESSION['msg'] = "Product Inserted Failed !!";}
+        $json =  json_decode($result);
+        echo "<script>console.log($myJSON);</script>";
+        echo "<script>console.log($result);</script>";
         curl_close($ch);
-
+        
         
     }
 ?>
@@ -87,7 +88,7 @@ if (strlen($_SESSION['alogin']) == 0) {
                                         <div class="alert alert-success">
                                             
                                             <button type="button" class="close" data-dismiss="alert">×</button>
-                                            <strong>Well done!</strong>
+                                            <strong>Well done! You have just create a product</strong>
                                             <?php echo htmlentities($_SESSION['msg']); ?><?php echo htmlentities($_SESSION['msg'] = ""); ?>
                                         </div>
                                     <?php } ?>
