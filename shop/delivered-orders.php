@@ -1,7 +1,7 @@
 <?php
 session_start();
 include('include/config.php');
-if(strlen($_SESSION['alogin'])==0)
+if(strlen($_SESSION['shop-login'])==0)
 	{	
 header('location:index.php');
 }
@@ -76,8 +76,8 @@ $currentTime = date( 'd-m-Y h:i:s A', time () );
                                     <tbody>
                                         <?php
 $ch = curl_init();
-$id = $_SESSION['id'];
-$token = $_SESSION['token'];
+$id = $_SESSION['shop-id'];
+$token = $_SESSION['shop-token'];
 
 $auth = 'Bearer ' . $token;
 
