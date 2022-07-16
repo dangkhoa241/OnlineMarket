@@ -32,11 +32,11 @@ else{ ?>
             <div class="cnt-block">
                 <ul class="list-unstyled list-inline">
                     <li class="dropdown dropdown-small">
-                        <a href="track-orders.php" class="dropdown-toggle"><span class="key">Track Order</b></a>
-
+                        <a href="track-orders.php" class="dropdown-toggle"><span class="key">Track Order</span></a>
                     </li>
                     <li class="dropdown dropdown-small">
-                        <a href="shop-register.php" class="dropdown-toggle"><span class="key">Shop Register</b></a>
+                        <a href="shop-register.php" class="dropdown-toggle">
+                            <span class="key">Shop Register</span></a>
 
                     </li>
 

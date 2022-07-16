@@ -139,6 +139,11 @@ include('includes/config.php');
                                                     <div class="product-price">
                                                         <span class="price">'.htmlentities($value->price).' VND </span>
                                                     </div><!-- /.product-price -->
+                                                    <div class="produt-addtocart">
+                                                        <button class="add-to-cart"
+                                                        value="_id='.$value->_id.'->image='.$value->images[0].'->product_name='.$value->name.'->price='.$value->price.'"
+                                                        >Thêm vào giỏ hàng</button>
+                                                    </div>
                                                 </div><!-- /.product-info -->
                                             </div><!-- /.product -->
                                         </div><!-- /.products -->
@@ -182,6 +187,9 @@ include('includes/config.php');
     <!-- For demo purposes – can be removed on production -->
 
     <script src="switchstylesheet/switchstylesheet.js"></script>
+
+
+    <script type="module" src="js/apis/order.js"></script>
 
     <script>
     $(document).ready(function() {
