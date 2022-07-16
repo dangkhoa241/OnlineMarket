@@ -20,7 +20,6 @@
 
         </ul>
         <ul class="widget widget-menu unstyled">
-            <li><a href="user-logs.php"><i class="menu-icon icon-tasks"></i>User Login Log </a></li>
 
             <li>
                 <a href="logout.php">
