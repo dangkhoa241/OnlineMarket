@@ -119,12 +119,14 @@ for ($i = 0; $i < $l1; $i++){
 }
 
 $l2 = count($shop_orders);
+$c = 0;
 for ($i = 0; $i < $l2; $i++) {
     if($shop_orders[$i]->status === "Đang giao"){ 
     // echo $users[$i]; echo "<br>";
+    $c++;
     ?>
                                         <tr>
-                                            <td><?php echo $i + 1;?> </td>
+                                            <td><?php echo $c;?> </td>
                                             <td><?php echo $shop_orders[$i]->_id;?></td>
                                             <td><?php echo $shop_orders[$i]->buyer_id;?></td>
                                             <td><?php echo $shop_orders[$i]->payment_method;?></td>

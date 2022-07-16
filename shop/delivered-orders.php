@@ -119,12 +119,14 @@ for ($i = 0; $i < $l1; $i++){
 }
 
 $l2 = count($shop_orders);
+$c = 0;
 for ($i = 0; $i < $l2; $i++) {
-    if($shop_orders[$i]->status === "Đã giao thành công"){ 
+    if($shop_orders[$i]->status === "Đã nhận"){ 
     // echo $users[$i]; echo "<br>";
+    $c++;
     ?>
                                         <tr>
-                                            <td><?php echo $i + 1;?> </td>
+                                            <td><?php echo $c;?> </td>
                                             <td><?php echo $shop_orders[$i]->_id;?></td>
                                             <td><?php echo $shop_orders[$i]->buyer_id;?></td>
                                             <td><?php echo $shop_orders[$i]->payment_method;?></td>
@@ -132,7 +134,7 @@ for ($i = 0; $i < $l2; $i++) {
                                             <td><?php echo $shop_orders[$i]->confirm_date;?></td>
                                             <td><?php echo $shop_orders[$i]->delivery_date;?></td>
                                             <td><?php echo $shop_orders[$i]->total_price;?></td>
-                                            <td><?php echo $shop_orders[$i]->status;?></td>
+                                            <td><?php echo "Đã giao thành công"?></td>
 
                                         </tr>
                                         <?php
