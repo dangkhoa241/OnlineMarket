@@ -2,6 +2,11 @@
 session_start();
 include('include/config.php');
 
+if(strlen($_SESSION['alogin'])==0)
+	{	
+header('location:index.php');
+}
+else{
 if(isset($_POST['active_seller'])){
     $url = "http://localhost:9000/api/users/active";
     $ar = $_POST['active_seller'];
@@ -38,7 +43,7 @@ if(isset($_POST['active_seller'])){
         $json =  json_decode($result);
     }
 }
-
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -132,7 +137,8 @@ for ($i = 0; $i < $l; $i++) {
                                             <td> <?php echo $users[$i]->email;?></td>
                                             <td><?php echo $users[$i]->mobile_number;?></td>
                                             <td><?php echo $users[$i]->address;?></td>
-                                            <td class="active"><input type="checkbox" name="active_seller[]" value="<?php echo $users[$i]->_id;?>" />
+                                            <td class="active"><input type="checkbox" name="active_seller[]"
+                                                    value="<?php echo $users[$i]->_id;?>" />
                                             </td>
                                         </tr>
                                         <?php
@@ -152,13 +158,13 @@ for ($i = 0; $i < $l; $i++) {
 
 
 
-                    </div>
-                    <!--/.content-->
                 </div>
-                <!--/.span9-->
+                <!--/.content-->
             </div>
+            <!--/.span9-->
         </div>
-        <!--/.container-->
+    </div>
+    <!--/.container-->
     </div>
     <!--/.wrapper-->
 

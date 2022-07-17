@@ -38,6 +38,8 @@ if(isset($_POST['login']))
     if ($json->code >= 200 && $json->code < 300 && $json->data->role === 'buyer')
     {
         $_SESSION['login']=$_POST['email'];
+        $_SESSION['cus-token']=$json->data->token;
+        $_SESSION['cus-id']=$json->data->_id;
     }
    
     echo "<script>console.log($result);</script>";
@@ -58,7 +60,7 @@ if(isset($_POST['login']))
                                 {
                                     console.log($result.data);
                                     localStorage.setItem('token', $result.data.token);
-                                    window.location = 'http://localhost/OnlineMarket/my-cart.php';
+                                    window.location = 'http://localhost/OnlineMarket';
                                 }
                     }
             </script>";

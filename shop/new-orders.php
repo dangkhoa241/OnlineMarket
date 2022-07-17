@@ -6,9 +6,45 @@ if(strlen($_SESSION['shop-login'])==0)
 header('location:index.php');
 }
 else{
-date_default_timezone_set('Asia/Kolkata');// change according timezone
-$currentTime = date( 'd-m-Y h:i:s A', time () );
 
+if(isset($_POST['confirm_order'])){
+    
+    $ar = $_POST['confirm_order'];
+    $url = "http://localhost:9000/api/orders/" . $ar[0];
+
+
+    $myObj = new stdClass();
+    $myObj->status = "Đang giao";
+    
+    $myJSON = json_encode($myObj);
+    $ch = curl_init();
+
+    $token = $_SESSION['shop-token'];
+
+    $auth = 'Bearer ' . $token;
+
+
+    $headers = array(
+            'Accept: application/json',
+            'Content-type: application/json',
+            'authorization: '. $auth,
+    );
+
+        curl_setopt($ch,CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $myJSON);
+
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+
+        //execute post
+        $result = curl_exec($ch);
+        $json =  json_decode($result);
+        //echo "<script>console.log($json);</script>";
+
+}
+}
 
 ?>
 <!DOCTYPE html>
@@ -46,7 +82,7 @@ $currentTime = date( 'd-m-Y h:i:s A', time () );
             <div class="row" width="1300px">
                 <?php include('include/sidebar.php');?>
                 <div class="span12">
-                    <div class="content">
+                    <form class="content" method="post">
 
                         <div class="module">
                             <div class="module-head">
@@ -120,13 +156,18 @@ for ($i = 0; $i < $l1; $i++){
 }
 
 $l2 = count($shop_orders);
+$c = 0;
 for ($i = 0; $i < $l2; $i++) {
     if($shop_orders[$i]->status === "Chờ xác nhận"){ 
     // echo $users[$i]; echo "<br>";
+    $c++;
     ?>
                                         <tr>
-                                            <td><?php echo $i + 1;?> </td>
-                                            <td><?php echo $shop_orders[$i]->_id;?></td>
+                                            <td><?php echo $c;?> </td>
+                                            <td><a href="order-detail.php?id=<?php echo $shop_orders[$i]->_id ?>">
+                                                    <?php echo $shop_orders[$i]->_id;?>
+                                                </a>
+                                            </td>
                                             <td><?php echo $shop_orders[$i]->buyer_id;?></td>
                                             <td><?php echo $shop_orders[$i]->payment_method;?></td>
                                             <td><?php echo $shop_orders[$i]->order_date;?></td>
@@ -134,7 +175,7 @@ for ($i = 0; $i < $l2; $i++) {
                                             <td><?php echo $shop_orders[$i]->delivery_date;?></td>
                                             <td><?php echo $shop_orders[$i]->total_price;?></td>
                                             <td><?php echo $shop_orders[$i]->status;?></td>
-                                            <td class="confirm"><input type="checkbox" name="active_seller[]"
+                                            <td class="confirm"><input type="checkbox" name="confirm_order[]"
                                                     value="<?php echo $shop_orders[$i]->_id;?>" />
                                             </td>
                                         </tr>
@@ -143,20 +184,25 @@ for ($i = 0; $i < $l2; $i++) {
 
 
                                         } ?>
-                                    </tbody>
+
                                 </table>
                             </div>
+                            <span class="">
+
+                                <input type="submit" name="submit" value="Confirm Order"
+                                    class="btn btn-upper btn-primary pull-right outer-right-xs">
+                            </span>
                         </div>
 
 
 
-                    </div>
-                    <!--/.content-->
                 </div>
-                <!--/.span9-->
+                <!--/.content-->
             </div>
+            <!--/.span9-->
         </div>
-        <!--/.container-->
+    </div>
+    <!--/.container-->
     </div>
     <!--/.wrapper-->
 
@@ -177,4 +223,3 @@ for ($i = 0; $i < $l2; $i++) {
     });
     </script>
 </body>
-<?php } ?>

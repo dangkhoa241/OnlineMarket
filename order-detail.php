@@ -2,6 +2,44 @@
 session_start();
 error_reporting(0);
 include('includes/config.php');
+if(isset($_POST['confirm_order'])){
+    
+    $ar = $_POST['confirm_order'];
+    $url = "http://localhost:9000/api/orders/" . $ar[0];
+    echo $url;
+    $myObj = new stdClass();
+    $myObj->status = "Đã nhận";
+    
+    $myJSON = json_encode($myObj);
+    $ch = curl_init();
+
+    $token = $_SESSION['cus-token'];
+
+    $auth = 'Bearer ' . $token;
+
+
+    $headers = array(
+            'Accept: application/json',
+            'Content-type: application/json',
+            'authorization: '. $auth,
+    );
+
+        curl_setopt($ch,CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $myJSON);
+
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+
+        //execute post
+        $result = curl_exec($ch);
+        $json =  json_decode($result);
+        //echo "<script>console.log($json);</script>";
+
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +55,7 @@ include('includes/config.php');
     <meta name="keywords" content="MediaCenter, Template, eCommerce">
     <meta name="robots" content="all">
 
-    <title>Order History</title>
+    <title>Order Detail</title>
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/main.css">
     <link rel="stylesheet" href="assets/css/green.css">
@@ -71,7 +109,7 @@ include('includes/config.php');
             <div class="breadcrumb-inner">
                 <ul class="list-inline list-unstyled">
                     <li><a href="#">Home</a></li>
-                    <li class='active'>Shopping Cart</li>
+                    <li class='active'>Orders Detail</li>
                 </ul>
             </div><!-- /.breadcrumb-inner -->
         </div><!-- /.container -->
@@ -83,80 +121,91 @@ include('includes/config.php');
                 <div class="shopping-cart">
                     <div class="col-md-12 col-sm-12 shopping-cart-table ">
                         <div class="table-responsive">
-                            <form name="cart" method="post">
+                            <h3>OrderID: <?php echo $_GET['id'];?></h3>
+                            <form name="content" method="post">
 
-                                <table class="table table-bordered">
+                                <table class="datatable-1 table table-bordered table-striped	 display table-responsive">
                                     <thead>
                                         <tr>
                                             <th class="cart-romove item">#</th>
+                                            <th class="cart-description item">ID</th>
+                                            <th class="cart-description item">Name</th>
                                             <th class="cart-description item">Image</th>
-                                            <th class="cart-product-name item">Product Name</th>
-
-                                            <th class="cart-qty item">Quantity</th>
-                                            <th class="cart-sub-total item">Price</th>
-
-                                            <th class="cart-total item">Payment Method</th>
-                                            <th class="cart-description item">Order Date</th>
-                                            <th class="cart-description item">Confirm Date</th>
-                                            <th class="cart-description item">Delivery Date</th>
-
-                                            <th class="cart-total last-item">Status</th>
+                                            <th class="cart-description item">Price</th>
+                                            <th class="cart-description item">Quantity</th>
+                                            <th class="cart-total last-item">ShopID</th>
                                         </tr>
                                     </thead><!-- /thead -->
 
                                     <tbody>
-                                        <?php 
-$orderid=$_POST['orderid'];
-$email=$_POST['email'];
-$ret = mysqli_query($con,"select t.email,t.id from (select usr.email,odrs.id from users as usr join orders as odrs on usr.id=odrs.userId) as t where  t.email='$email' and (t.id='$orderid')");
-$num=mysqli_num_rows($ret);
-if($num>0)
-{
-$query=mysqli_query($con,"select products.productImage1 as pimg1,products.productName as pname,orders.productId as opid,orders.quantity as qty,products.productPrice as pprice,orders.paymentMethod as paym,orders.orderDate as odate,orders.id as orderid from orders join products on orders.productId=products.id where orders.id='$orderid' and orders.paymentMethod is not null");
-$cnt=1;
-while($row=mysqli_fetch_array($query))
-{
-?>
+                                        <?php
+$ch = curl_init();
+$id = $_SESSION['cus-id'];
+$token = $_SESSION['cus-token'];
+
+$auth = 'Bearer ' . $token;
+
+
+$headers = array(
+    'Accept: application/json',
+    'Content-type: application/json',
+    'authorization: '. $auth,
+);
+
+
+curl_setopt($ch, CURLOPT_URL, 'http://localhost:9000/api/orders');
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+
+//Execute the request.
+$data = curl_exec($ch);
+echo "<script>console.log($data);</script>";
+$json =  json_decode($data);
+//echo "<script>console.log($json);</script>";
+// if ($json->data >= 200 && $json->code < 300)
+// {
+//     $_SESSION['alogin']=$_POST['username'];
+//     $_SESSION['token']=$json->data->token;
+// }
+curl_close($ch);
+$orders = $json->data;
+$cus_orders = [];
+$l1 = count($json->data);
+for ($i = 0; $i < $l1; $i++){
+    if($orders[$i]->_id == $_GET['id']){
+            $order_detail = $orders[$i]->products;
+            break;
+        }   
+    } 
+
+
+$l2 = count($order_detail);
+$c = 0;
+for ($i = 0; $i < $l2; $i++) {
+    $c++;
+    ?>
                                         <tr>
-                                            <td><?php echo $cnt;?></td>
-                                            <td class="cart-image">
-                                                <a class="entry-thumbnail" href="detail.html">
-                                                    <img src="admin/productimages/<?php echo $row['pname'];?>/<?php echo $row['pimg1'];?>"
-                                                        alt="" width="84" height="146">
-                                                </a>
+                                            <td><?php echo $c;?> </td>
+                                            <td><?php echo $order_detail[$i]->_id;?></td>
+                                            <td><?php echo $order_detail[$i]->product_name;?></td>
+                                            <td><img src="<?php echo $order_detail[$i]->images[0];?>" alt="" width="150"
+                                                    height="150">
                                             </td>
-                                            <td class="cart-product-name-info">
-                                                <h4 class='cart-product-description'><a
-                                                        href="product-details.php?pid=<?php echo $row['opid'];?>">
-                                                        <?php echo $row['pname'];?></a></h4>
+                                            <td><?php echo $order_detail[$i]->price;?></td>
+                                            <td><?php echo $order_detail[$i]->quantity;?></td>
+                                            <td><?php echo $order_detail[$i]->shop_id;?></td>
 
 
-                                            </td>
-                                            <td class="cart-product-quantity">
-                                                <?php echo $qty=$row['qty']; ?>
-                                            </td>
-                                            <td class="cart-product-sub-total"><?php echo $price=$row['pprice']; ?>
-                                            </td>
-                                            <td class="cart-product-grand-total"><?php echo $qty*$price;?></td>
-                                            <td class="cart-product-sub-total"><?php echo $row['paym']; ?> </td>
-                                            <td class="cart-product-sub-total"><?php echo $row['odate']; ?> </td>
-
-                                            <td>
-                                                <a href="javascript:void(0);"
-                                                    onClick="popUpWindow('track-order.php?oid=<?php echo htmlentities($row['orderid']);?>');"
-                                                    title="Track order">
-                                                    Track
-                                            </td>
                                         </tr>
-                                        <?php $cnt=$cnt+1;} } else { ?>
-                                        <tr>
-                                            <td colspan="8">Either order id or Registered email id is invalid</td>
-                                        </tr>
-                                        <?php } ?>
-                                    </tbody><!-- /tbody -->
-                                </table><!-- /table -->
+                                        <?php
 
+
+                                        } ?>
+
+                                </table>
                         </div>
+
                     </div>
 
                 </div><!-- /.shopping-cart -->

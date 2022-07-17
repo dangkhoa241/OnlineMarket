@@ -17,7 +17,7 @@ $currentTime = date( 'd-m-Y h:i:s A', time () );
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop | New Orders</title>
+    <title>Shop | Delivered Orders</title>
     <link type="text/css" href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link type="text/css" href="bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
     <link type="text/css" href="css/theme.css" rel="stylesheet">
@@ -50,7 +50,7 @@ $currentTime = date( 'd-m-Y h:i:s A', time () );
 
                         <div class="module">
                             <div class="module-head">
-                                <h3>New Orders</h3>
+                                <h3>Delivered Orders</h3>
                             </div>
                             <div class="module-body table">
 
@@ -119,20 +119,25 @@ for ($i = 0; $i < $l1; $i++){
 }
 
 $l2 = count($shop_orders);
+$c = 0;
 for ($i = 0; $i < $l2; $i++) {
-    if($shop_orders[$i]->status === "Đã giao thành công"){ 
+    if($shop_orders[$i]->status === "Đã nhận"){ 
     // echo $users[$i]; echo "<br>";
+    $c++;
     ?>
                                         <tr>
-                                            <td><?php echo $i + 1;?> </td>
-                                            <td><?php echo $shop_orders[$i]->_id;?></td>
+                                            <td><?php echo $c;?> </td>
+                                            <td><a href="order-detail.php?id=<?php echo $shop_orders[$i]->_id ?>">
+                                                    <?php echo $shop_orders[$i]->_id;?>
+                                                </a>
+                                            </td>
                                             <td><?php echo $shop_orders[$i]->buyer_id;?></td>
                                             <td><?php echo $shop_orders[$i]->payment_method;?></td>
                                             <td><?php echo $shop_orders[$i]->order_date;?></td>
                                             <td><?php echo $shop_orders[$i]->confirm_date;?></td>
                                             <td><?php echo $shop_orders[$i]->delivery_date;?></td>
                                             <td><?php echo $shop_orders[$i]->total_price;?></td>
-                                            <td><?php echo $shop_orders[$i]->status;?></td>
+                                            <td><?php echo "Đã giao thành công"?></td>
 
                                         </tr>
                                         <?php
