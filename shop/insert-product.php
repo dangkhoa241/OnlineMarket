@@ -1,7 +1,7 @@
 <?php
 session_start();
 include('include/config.php');
-if (strlen($_SESSION['shop-login']) == 0) {
+if (strlen($_SESSION['shop-token']) == 0) {
     header('location:index.php');
 } else {
 
@@ -22,7 +22,7 @@ if (strlen($_SESSION['shop-login']) == 0) {
 
         $myJSON = json_encode($myObj);
         $ch = curl_init();
-        $token = $_SESSION['token'];
+        $token = $_SESSION['shop-token'];
         $auth = 'Bearer ' . $token;
 
 
