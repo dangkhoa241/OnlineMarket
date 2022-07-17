@@ -39,7 +39,11 @@ else{ ?>
                             <span class="key">Shop Register</span></a>
 
                     </li>
-
+                    <li class="dropdown dropdown-small">
+                        <a href="shop/index.php" class="dropdown-toggle">
+                            <span class="key">Shop Login</span></a>
+                        
+                    </li>
 
                 </ul>
             </div>
