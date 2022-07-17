@@ -87,7 +87,7 @@ if (strlen($_SESSION['shop-login']) == 0) {
 
                                             <button type="button" class="close" data-dismiss="alert">×</button>
                                             <strong>Well done! You have just create a product</strong>
-                                            <?php echo htmlentities($_SESSION['msg']); ?><?php echo htmlentities($_SESSION['msg'] = ""); ?>
+                                           
                                         </div>
                                     <?php } ?>
 
